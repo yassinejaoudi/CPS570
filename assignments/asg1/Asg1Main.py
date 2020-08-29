@@ -7,6 +7,8 @@ Team Members:
 # import libraries or classes
 import validators # source: https://validators.readthedocs.io/en/latest/#
 import sys
+from urllib.parse import urlparse # source: https://docs.python.org/3/library/urllib.parse.html 
+from queue import Queue
 from Asg1Socket import TCPsocket
 from Asg1Request import Request
 
@@ -19,24 +21,37 @@ def main(): # function, method are the same
 
     mysocket = TCPsocket() # create an object of TCP socket
     mysocket.createSocket()
+    Q = Queue()
+    myrequest = Request()
     
-    # TODO: Loop over the input file to read URLs 
+    # TODO: (Not needed in part 1) Loop over the input file to read URLs 
     # Not sure if we need to create a socket for each one
+    # try:
+    #     with open("URL-input-100.txt") as file:
+    #         for line in file:
+    #             Q.put(line)
+    # except IOError:
+    #     print('No such file. Please include an existing file name ...')
+    #     exit(1)
+
     # print("arg: {} & type: {}".format(sys.argv[1],type(str(sys.argv[1]))))
     # TODO: (Part1) We might need to pass only one arg instead of a list of args to
     # satisfy part 1 requirement (program must accept a single command-line arg)
-    host = sys.argv[1]
+    parsedHost = urlparse(sys.argv[1])
+    host = parsedHost.geturl()
     if (validators.url(host)):
         print('URL: {}'.format(host))
-        ip = mysocket.getIP(host)
+        print('         Parsing URL... host {}, port {}, request /{}'.format(parsedHost.netloc,parsedHost.port,parsedHost.query))
+        getIpInfo = mysocket.getIP(parsedHost.netloc)
+        myIp = getIpInfo[0]
+        print('         Doing DNS... done in {} ms, found {}'.format(getIpInfo[1], myIp))
         # TODO: For politeness, the code will need to hit only unique IPs (Check if the ip is unique)
-        port  = 80
         # TODO: Abort all pages that takes longer than 10 secs or are more than 2MB
-        mysocket.connect(ip, port)
+        port = 80
+        mysocket.connect(myIp, port)
 
         # build our request
-        myrequest = Request()
-        msg = myrequest.headRequest(host)
+        msg = myrequest.headRequest(parsedHost.netloc)
 
         # send out request
         mysocket.send(msg)
@@ -45,7 +60,7 @@ def main(): # function, method are the same
         
         mysocket.close()
     else:
-        print('Please type a valid URL ...')   
+        print('Please include a valid URL in command line ...')   
     
 
 # call main() method:

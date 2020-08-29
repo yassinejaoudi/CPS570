@@ -6,7 +6,7 @@ Team Members:
 
 # resources: https://docs.python.org/3/howto/sockets.html
 
-import socket, select
+import socket, select, time
 
 TIMEOUT = 10 # unit is seconds
 BUF_SIZE = 1024 # unit is bytes
@@ -33,11 +33,14 @@ class TCPsocket:
     def getIP(self, hostname):
         self.host = hostname
         try:
+            dns_start = time.time()
             ip = socket.gethostbyname(hostname)   # ip is a local variable to getIP(hostname), ip is of string type
+            dns_end = time.time()
+            dns_time = (dns_end - dns_start) * 1000 # in ms 
         except socket.gaierror:
             print("Failed to gethostbyname")
             return None
-        return ip
+        return ip, dns_time
 
 
     # connect to a remote server: IP address, port
