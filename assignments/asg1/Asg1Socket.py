@@ -6,7 +6,7 @@ Team Members:
 
 # resources: https://docs.python.org/3/howto/sockets.html
 
-import socket, select, time
+import socket, select, time, sys
 
 TIMEOUT = 10 # unit is seconds
 BUF_SIZE = 1024 # unit is bytes
@@ -48,8 +48,12 @@ class TCPsocket:
         if self.sock is None or ip is None:
             return
         try:
+            conn_start = time.time()
+            # print('         Connecting on page... ', end='')
+            sys.stdout.write("         Connecting on page... ")
             self.sock.connect((ip, port))   # server address is defined by (ip, port)
-            print("Successfully connect to host:", ip)
+            conn_end = time.time()
+            sys.stdout.write('done in {} ms'.format(round((conn_end - conn_start) * 1000,2)) + '\n')
         except socket.error as e:
             print("Failed to connect: {}".format(e))
             self.sock.close()

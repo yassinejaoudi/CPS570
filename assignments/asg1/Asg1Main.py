@@ -44,7 +44,7 @@ def main(): # function, method are the same
         print('         Parsing URL... host {}, port {}, request /{}'.format(parsedHost.netloc,parsedHost.port,parsedHost.query))
         getIpInfo = mysocket.getIP(parsedHost.netloc)
         myIp = getIpInfo[0]
-        print('         Doing DNS... done in {} ms, found {}'.format(getIpInfo[1], myIp))
+        print('         Doing DNS... done in {} ms, found {}'.format(round(getIpInfo[1],2), myIp))
         # TODO: For politeness, the code will need to hit only unique IPs (Check if the ip is unique)
         # TODO: Abort all pages that takes longer than 10 secs or are more than 2MB
         port = 80
