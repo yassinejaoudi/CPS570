@@ -86,6 +86,8 @@ class TCPsocket:
             return ""
         # else reader has data to read
         try:
+            rcv_start = time.time()
+            sys.stdout.write("         Loading... ")
             while True:         # use a loop to receive data until we receive all data
                 data = self.sock.recv(BUF_SIZE)  # returned chunk of data with max length BUF_SIZE. data is in bytes
                 if data == b'':  # if empty bytes
@@ -93,6 +95,9 @@ class TCPsocket:
                 else:
                    reply += data  # append to reply
                    bytesRecd += len(data)
+            rcv_end  = time.time()
+            rcv_time = (rcv_end - rcv_start) * 1000 # in ms 
+            sys.stdout.write('done in {} ms with {} bytes'.format(round(rcv_time,2), bytesRecd) + '\n')
         except socket.error as e:
             print("socket error in receive: {}".format(e))
             self.sock.close()
