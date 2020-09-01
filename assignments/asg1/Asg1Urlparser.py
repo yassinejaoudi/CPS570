@@ -7,8 +7,6 @@ class URLparser:
     def parse(self, string): # string is a url
         self.query = '' # default query is an empty string
         self.path = '/' # default path
-        # TODO: Make port dynamic
-        self.port = '80' # default port
         self.host = '' # host is always defined for valid URLs
         index = string.find('\n')
         if index != -1:
@@ -44,8 +42,9 @@ class URLparser:
         # get port
         index = string.find(':')
         if index != -1:
-            self.path = string[index + 1:]
+            self.port = string[index + 1:]
             string = string[:index]
+
 
         # get host …
         self.host = string

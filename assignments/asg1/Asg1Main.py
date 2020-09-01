@@ -41,8 +41,10 @@ def main(): # function, method are the same
     # send out request
     mysocket.send(msg)
     data = mysocket.receive() # receive a reply from the server
-    print("data received: ", data)
+    # print("data received: {}".format(data))
+    myrequest.cleanStr(data)
     
+
     mysocket.close()
     # else:
     #     print('Please include a valid URL in command line ...')   

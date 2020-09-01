@@ -12,3 +12,8 @@ The code for this assignment needs to meet the following items to meet a perfect
 |  **Output**  | 10  | 3<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />  | Correct host/port/rqst<br />Correct DNS info<br />Timing of connect()<br />Timing of recv()<br />Correct page size<br />Correct HTTP status<br />Correct number of links<br />Correct HTTP header shown<br />   | :heavy_check_mark:<br />:heavy_check_mark:<br />:heavy_check_mark:<br />:heavy_check_mark:<br /><br /><br /><br /><br />  |
 |  **Errors**  | 6  | 1<br />1<br />1<br />1<br />1<br />1<br />  | Handle invalid port/scheme<br />Notify of DNS failure<br />Notify of connect failure<br />Notify of recv() failure<br />Notify of non-HTTP reply <br />Parses non-2xx pages<br />  |   |
 |  **Other**  | 1  | 1  | Missing files for compilation  |   |
+
+
+## Current Code Output:
+
+![Output](current_out.png)
