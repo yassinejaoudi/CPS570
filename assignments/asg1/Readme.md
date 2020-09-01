@@ -17,4 +17,10 @@ The code for this assignment needs to meet the following items to meet a perfect
 
 ## Current Code Output:
 
-![Output](current_out.png)
+![Output](/figures/current_out.png)
+
+![Fail Output](/figures/fail_output.png)
+
+## Goal of this part 1 of the assignment:
+
+![Goal](/figures/goal.png)
