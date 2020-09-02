@@ -25,9 +25,25 @@ The code for this assignment needs to meet the following items to meet a perfect
 
 
 
-## Current Code Output:
+## Code Output:
+
+Output code of running different websites:
+
+```bash
+python Asg1Main.py http://www.yahoo.com
+```
 
 ![Output](current_out.png)
+
+```bash
+python Asg1Main.py http://www.runescape.com
+```
+
+![output](out_runescape.png)
+
+```bash
+python Asg1Main.py http://www.128.194.135.11?viewcart.php/
+```
 
 ![Fail Output](fail_output.png)
 

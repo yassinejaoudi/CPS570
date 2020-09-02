@@ -9,7 +9,7 @@ Team Members:
 import socket, select, time, sys
 
 TIMEOUT = 10 # unit is seconds
-BUF_SIZE = 1024 # unit is bytes
+BUF_SIZE = 4096 # unit is bytes
 
 class TCPsocket:
     # list our instance variables

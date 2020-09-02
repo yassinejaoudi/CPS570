@@ -31,7 +31,7 @@ def main(): # function, method are the same
     
     msg = myrequest.headRequest(host) # build our request
     data = mysocket.crawl(host, port, msg)
-    idx = data.find('HTTP/1.0')
+    idx = data.find('HTTP/')
     if idx != -1:
         statusCode = data[idx+8:idx+13]
         sys.stdout.write("status code {}\n".format(statusCode))
