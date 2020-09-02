@@ -6,14 +6,18 @@ Team Members:
 '''
 
 import sys
+import requests
 
 class Request:
     def __init__(self):
         self.request = ''    # a string
 
-    def getRequest(self, host, path, query):
+    def getRequest(self, host, path, query, useragent):
         """Build an HTTP GET request """
-        self.request = 'GET ' + path + query + ' HTTP/1.0' +  '\nHost: ' + host + '\nConnection: close\n\n'
+
+        useragent = requests.utils.default_user_agent()
+
+        self.request = 'GET ' + path + query + ' HTTP/1.0' +  '\nHost: ' + host + '\nUser-Agent: ' + useragent + '\nConnection: close\n\n'
         try:
             return self.request
         except ValueError:
