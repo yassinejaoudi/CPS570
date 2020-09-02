@@ -25,9 +25,9 @@ def main(): # function, method are the same
     
     URL = sys.argv[1]
     host, port, path, query  = myparser.parse(URL)
-    
     print('URL: {}'.format(URL))
     print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
+    
     # TODO: For politeness, the code will need to hit only unique IPs (Check if the ip is unique)
     # TODO: Abort all pages that takes longer than 10 secs or are more than 2MB
     

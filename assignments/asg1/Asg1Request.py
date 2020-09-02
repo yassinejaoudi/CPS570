@@ -90,6 +90,7 @@ class Request:
 
         if idx != -1:
             self.len = data[data.find(self.lct)-2:idx]
+            print('Content Length: {} & LCT: {}'.format(idx,data.find(self.lct)-2))
             idx_end = data.find(self.len[-1:-4]+'\r\n')
             data = data[idx_end:]
 
