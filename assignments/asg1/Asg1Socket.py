@@ -17,12 +17,12 @@ class TCPsocket:
     def __init__(self):
         self.sock = None  # each object's instance variables
         self.host = ""  # remote host name
-        print("create an object of TCPsocket")
+        # print("create an object of TCPsocket")
 
     def createSocket(self):
         try:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # self.sock is an instance variable
-            print("created a tcp socket!")
+            # print("created a tcp socket!")
         except socket.error as e:
             print("Failed to create a TCP socket {}".format(e))
             self.sock = None
@@ -98,6 +98,7 @@ class TCPsocket:
             rcv_end  = time.time()
             rcv_time = (rcv_end - rcv_start) * 1000 # in ms 
             sys.stdout.write('done in {} ms with {} bytes'.format(round(rcv_time,2), bytesRecd) + '\n')
+            sys.stdout.write("         Verifying header... ")
         except socket.error as e:
             print("socket error in receive: {}".format(e))
             self.sock.close()
@@ -110,3 +111,12 @@ class TCPsocket:
             self.sock.close()
 
 
+    def crawl(self, host, port, msg):
+        self.createSocket()
+        getIpInfo = self.getIP(host)
+        myIp = getIpInfo[0]
+        print('         Doing DNS... done in {} ms, found {}'.format(round(getIpInfo[1],2), myIp))
+        self.connect(myIp, port)
+        self.send(msg)
+        reply = self.receive()
+        return reply

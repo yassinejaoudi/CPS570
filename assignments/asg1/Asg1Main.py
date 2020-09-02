@@ -5,7 +5,7 @@ Team Members:
 '''
 
 # import libraries or classes
-import validators # source: https://validators.readthedocs.io/en/latest/#
+# import validators # source: https://validators.readthedocs.io/en/latest/#
 import sys
 # from urllib.parse import urlparse # source: https://docs.python.org/3/library/urllib.parse.html 
 from Asg1Socket import TCPsocket
@@ -20,7 +20,6 @@ from Asg1Urlparser import URLparser
 def main(): # function, method are the same
 
     mysocket = TCPsocket() # create an object of TCP socket
-    mysocket.createSocket()
     myrequest = Request()
     myparser  = URLparser()
     
@@ -29,16 +28,15 @@ def main(): # function, method are the same
     
     print('URL: {}'.format(URL))
     print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
-    getIpInfo = mysocket.getIP(host)
-    myIp = getIpInfo[0]
-    print('         Doing DNS... done in {} ms, found {}'.format(round(getIpInfo[1],2), myIp))
     # TODO: For politeness, the code will need to hit only unique IPs (Check if the ip is unique)
     # TODO: Abort all pages that takes longer than 10 secs or are more than 2MB
-    mysocket.connect(myIp, port)
     
     msg = myrequest.headRequest(host) # build our request
-    mysocket.send(msg) # send out request
-    data = mysocket.receive() # receive a reply from the server
+    data = mysocket.crawl(host, port, msg)
+    idx = data.find('HTTP/1.0')
+    if idx != -1:
+        statusCode = data[idx+8:idx+13]
+        sys.stdout.write("status code {}\n".format(statusCode))
 
     if len(data) != 0:
         myrequest.cleanStr(data) 

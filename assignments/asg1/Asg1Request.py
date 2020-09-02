@@ -5,6 +5,8 @@ Team Members:
     Akpan, Samuel Cyril  
 '''
 
+import sys
+
 class Request:
     def __init__(self):
         self.request = ''    # a string
