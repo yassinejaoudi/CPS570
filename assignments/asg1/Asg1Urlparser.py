@@ -50,3 +50,11 @@ class URLparser:
         self.host = string
         
         return self.host, int(self.port), self.path, self.query
+
+    def responseParser(self, data):
+        index = data.find('bytearray')
+        if index != -1:
+            data = data.strip('bytearray(b\'\'\)')
+            data = data.split('\\r\\n')
+            for i in range(len(data)):
+                print(data[i])

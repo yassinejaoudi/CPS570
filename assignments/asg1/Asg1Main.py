@@ -37,10 +37,14 @@ def main(): # function, method are the same
     if idx != -1:
         statusCode = data[idx+8:idx+13]
         sys.stdout.write("status code {}\n".format(statusCode))
+'''
+Notice: switched out the cleanStr function. The responseParse function is what I used to rearrange the display
+'''
+    
+    #if len(data) != 0:
+    #   myrequest.cleanStr(data) 
 
-    if len(data) != 0:
-        myrequest.cleanStr(data) 
-
+    myparser.responseParser(data)
     mysocket.close()
     
 
