@@ -16,7 +16,9 @@ from Asg1Urlparser import URLparser
     # Example: python main.py 1 URL-input-100.txt
 
 def main(): # function, method are the same
-
+    if len(sys.argv) < 2:
+        print("Error: insufficient arguments \nCorrect Usage: <interpreter> <Program Name> <URL>")
+        sys.exit()
     mysocket = TCPsocket() # create an object of TCP socket
     myrequest = Request()
     myparser  = URLparser()

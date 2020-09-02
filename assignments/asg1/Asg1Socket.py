@@ -46,7 +46,11 @@ class TCPsocket:
     # connect to a remote server: IP address, port
     def connect(self, ip, port):
         if self.sock is None or ip is None:
-            return
+            print("Invalid or null IP address")
+            return 
+        if port < 1 or port > 49151:    # Validate given Port number
+            print('Invalid/Non-existent Port Number')
+            sys.exit()
         try:
             conn_start = time.time()
             # print('         Connecting on page... ', end='')
@@ -56,7 +60,7 @@ class TCPsocket:
             sys.stdout.write('done in {} ms'.format(round((conn_end - conn_start) * 1000,2)) + '\n')
         except socket.error as e:
             print("Failed to connect: {}".format(e))
-            self.sock.close()
+            self.sock.close() 
             self.sock = None
 
     # return the number of bytes sent
