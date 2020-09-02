@@ -1,3 +1,9 @@
+'''
+Team Members:
+    Yassine Jaoudi
+    Akpan, Samuel Cyril  
+'''
+
 # urlparser.py
 class URLparser:
     
@@ -56,5 +62,6 @@ class URLparser:
         if index != -1:
             data = data.strip('bytearray(b\'\'\)')
             data = data.split('\\r\\n')
+            print('\n----------------------------------------------------------')
             for i in range(len(data)):
                 print(data[i])

@@ -5,9 +5,7 @@ Team Members:
 '''
 
 # import libraries or classes
-# import validators # source: https://validators.readthedocs.io/en/latest/#
-import sys
-# from urllib.parse import urlparse # source: https://docs.python.org/3/library/urllib.parse.html 
+import sys 
 from Asg1Socket import TCPsocket
 from Asg1Request import Request
 from Asg1Urlparser import URLparser
@@ -37,13 +35,9 @@ def main(): # function, method are the same
     if idx != -1:
         statusCode = data[idx+8:idx+13]
         sys.stdout.write("status code {}\n".format(statusCode))
-'''
-Notice: switched out the cleanStr function. The responseParse function is what I used to rearrange the display
-'''
-    
-    #if len(data) != 0:
-    #   myrequest.cleanStr(data) 
 
+
+    # Notice: switched out the cleanStr function. The responseParse function is what I used to rearrange the display
     myparser.responseParser(data)
     mysocket.close()
     
