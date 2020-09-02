@@ -12,7 +12,10 @@ class Request:
     def getRequest(self, host, path, query):
         """Build an HTTP GET request """
         self.request = 'GET ' + path + query + ' HTTP/1.0' +  '\nHost: ' + host + '\nConnection: close\n\n'
-        return self.request
+        try:
+            return self.request
+        except ValueError:
+            print('Non-HTTP Reply...')
 
     def headRequest(self, host):
         """Build a HEAD request, to check if host has "robots.txt" file """
@@ -88,6 +91,6 @@ class Request:
             idx_end = data.find(self.len[-1:-4]+'\r\n')
             data = data[idx_end:]
 
-        print('-----------------------------------------------------\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n' \
+        print('\n-----------------------------------------------------\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n' \
                 .format(self.http, self.date, self.svr,self.cache,self.Cont,\
                     self.lct,self.len))

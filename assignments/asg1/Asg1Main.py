@@ -27,7 +27,6 @@ def main(): # function, method are the same
     URL = sys.argv[1]
     host, port, path, query  = myparser.parse(URL)
     
-    # if (validators.url(host)):
     print('URL: {}'.format(URL))
     print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
     getIpInfo = mysocket.getIP(host)
@@ -36,18 +35,15 @@ def main(): # function, method are the same
     # TODO: For politeness, the code will need to hit only unique IPs (Check if the ip is unique)
     # TODO: Abort all pages that takes longer than 10 secs or are more than 2MB
     mysocket.connect(myIp, port)
-    # build our request
-    msg = myrequest.headRequest(host)
-    # send out request
-    mysocket.send(msg)
-    data = mysocket.receive() # receive a reply from the server
-    # print("data received: {}".format(data))
-    myrequest.cleanStr(data)
     
+    msg = myrequest.headRequest(host) # build our request
+    mysocket.send(msg) # send out request
+    data = mysocket.receive() # receive a reply from the server
+
+    if len(data) != 0:
+        myrequest.cleanStr(data) 
 
     mysocket.close()
-    # else:
-    #     print('Please include a valid URL in command line ...')   
     
 
 # call main() method:
