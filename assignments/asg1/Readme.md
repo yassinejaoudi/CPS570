@@ -1,3 +1,13 @@
+## Usage:
+
+Use the following command to run the code:
+
+```bash
+python Asg1Main.py http://www.yahoo.com
+```
+
+Include any link to check for appropriate errors by changing the argument in the above command.
+
 ## ToDo list status:
 
 The code for this assignment needs to meet the following items to meet a perfect score.
