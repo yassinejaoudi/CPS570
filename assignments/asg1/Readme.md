@@ -22,7 +22,7 @@ The code for this assignment needs to meet the following items to meet a perfect
 * :heavy_check_mark: Include this one if its done
 
 
-:rotating_light: Choosing within the output and logic function as the other functions are either already implemented or are a quick fix just to split the work fairly.
+:rotating_light::rotating_light::rotating_light: Choose 4 or 5 within the output and logic function as the other functions are either already implemented or are a quick fix just to split the work fairly.
 
 
 | **Function**  | **Points**  | **Break down**  | **Item**  | **Samantha** | **Samuel** | **Yassine** | 
