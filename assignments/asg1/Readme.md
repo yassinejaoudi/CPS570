@@ -1,56 +1,42 @@
 ## Team Members:
 * Yassine Jaoudi
 * Akpan, Samuel Cyril
+* Samantha Clark
 
 ## Usage:
 
 Use the following command to run the code:
 
 ```bash
-python Asg1Main.py http://www.yahoo.com
+python Asg1Main.py 1 URL-input.txt
 ```
 
-Include any link to check for appropriate errors by changing the argument in the above command.
+The code accepts two arguments, first one indicates the number of threads to run and the second one the input file
 
 ## ToDo list status:
 
 The code for this assignment needs to meet the following items to meet a perfect score.
 
-:construction: Include this emoji if currently working on it to avoid overlap
+* :construction: Include this emoji if you choose to work on the appropriate task
+* :recycle: Include if this task is done, but it needs to be rechecked by another teammate
+* :heavy_check_mark: Include this one if its done
 
-| **Function**  | **Points**  | **Break down**  | **Item**  | **Status** |
-|---------------|-------------|-----------------|-----------|----------------|
-|   **Input**   |  1 |  1 | No usage info if incorrect args  |      :heavy_check_mark:         |
-|  **Request**  |  3 |  1<br />1<br />1<br />| Correct GET syntax<br />Hostname in rqst<br />User agent in rqst<br />| :heavy_check_mark:<br />:heavy_check_mark:<br /> :heavy_check_mark: <br />  |
-|**Receive loop**| 4  | 1<br />2<br />1<br />  |  Dynamic buffer resizing<br /> Fails to receive/parse 96MB file<br /> Select()<br />  |  <br />:heavy_check_mark:<br />:heavy_check_mark:<br /> |
-|  **Output**  | 10  | 3<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />  | Correct host/port/rqst<br />Correct DNS info<br />Timing of connect()<br />Timing of recv()<br />Correct page size<br />Correct HTTP status<br />Correct number of links<br />Correct HTTP header shown<br />   | :heavy_check_mark:<br />:heavy_check_mark:<br />:heavy_check_mark:<br />:heavy_check_mark:<br /><br />:heavy_check_mark:<br /><br />:heavy_check_mark:<br />  |
-|  **Errors**  | 6  | 1<br />1<br />1<br />1<br />1<br />1<br />  | Handle invalid port/scheme<br />Notify of DNS failure<br />Notify of connect failure<br />Notify of recv() failure<br />Notify of non-HTTP reply <br />Parses non-2xx pages<br />  | :heavy_check_mark: <br />:heavy_check_mark:<br />:heavy_check_mark:<br />:heavy_check_mark:<br />:heavy_check_mark:<br />:heavy_check_mark:<br />  |
-|  **Other**  | 1  | 1  | No Missing files for compilation  | :heavy_check_mark:  |
+
+:rotating_light: Choosing within the output and logic function as the other functions are either already implemented or are a quick fix just to split the work fairly.
+
+
+| **Function**  | **Points**  | **Break down**  | **Item**  | **Samantha** | **Samuel** | **Yassine** | 
+|---------------|-------------|-----------------|-----------|--------------|------------|-------------|
+|  **Output**  | 11  | 1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />2<br />  | Show Input file size<br />Correct URLs being crawled<br />Correct DNS results<br />Print host checks<br />Print host checks<br />Print IP checks<br />Timing of robots connect()<br />Timing of robots recv()<br />Correct robots page size<br />Correct robots HTTP status<br />Correct page download results<br />   | <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> | <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> | <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> |
+|  **Logic**  | 8  | 2<br />2<br />2<br />2<br />  | Load multiple pages<br />Block duplicate hosts<br />Block duplicate IPs<br />Block loading robots-prohibited pages<br />  | <br /><br /><br /><br /> | <br /><br /><br /><br />  |  <br /><br /><br /><br /> |
+|**Robot errors**| 5  | 1<br />1<br />1<br />1<br />1<br />  |  Notify of connect failure<br /> Notify of recv failure<br /> Notify of non-HTTP reply<br />Report Slow download<br />Report exceeding max<br />  | <br /><br /><br /><br /><br />  | <br /><br /><br /><br /><br /> |  <br /><br /><br /><br /><br /> |
+|  **Other**  | 1  | 1  | No Missing files for compilation  |  |   |   |
 
 
 
 ## Code Output:
 
-Output code of running different websites:
 
-```bash
-python Asg1Main.py http://www.yahoo.com
-```
+## Goal of this part 2 of the assignment:
 
-![Output](current_out.png)
-
-```bash
-python Asg1Main.py http://www.runescape.com
-```
-
-![output](out_runescape.png)
-
-```bash
-python Asg1Main.py http://www.128.194.135.11?viewcart.php/
-```
-
-![Fail Output](fail_output.png)
-
-## Goal of this part 1 of the assignment:
-
-![Goal](goal.png)
+![Goal](part2_goal_output.png)
