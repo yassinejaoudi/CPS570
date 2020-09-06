@@ -2,6 +2,7 @@
 Team Members:
     Yassine Jaoudi
     Akpan, Samuel Cyril  
+    Samantha Clark
 '''
 
 # import libraries or classes
@@ -9,11 +10,8 @@ import sys
 from Asg1Socket import TCPsocket
 from Asg1Request import Request
 from Asg1Urlparser import URLparser
+from queue import Queue
 
-# TODO: main must accept two args:
-    # 1-) number of threads
-    # 2-) Input file
-    # Example: python main.py 1 URL-input-100.txt
 
 def main(): # function, method are the same
     if len(sys.argv) < 2:
@@ -22,26 +20,46 @@ def main(): # function, method are the same
     mysocket = TCPsocket() # create an object of TCP socket
     myrequest = Request()
     myparser  = URLparser()
+    Q = Queue()
+
+    numThreads = sys.argv[1]
+    filename = sys.argv[2]
+
+    print('\nSys.argv: ',sys.argv)
+    print('\nFilename: {} & numThreads: {}'.format(filename,numThreads))
     
-    URL = sys.argv[1]
-    host, port, path, query  = myparser.parse(URL)
-    print('URL: {}'.format(URL))
-    print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
+    try:
+        with open(filename) as file:
+            for line in file:
+                Q.put(line)
+    except IOError:
+        print('No such file')
+        exit(1)
     
-    # TODO: For politeness, the code will need to hit only unique IPs (Check if the ip is unique)
-    # TODO: Abort all pages that takes longer than 10 secs or are more than 2MB
-    
-    msg = myrequest.headRequest(host) # build our request
-    data = mysocket.crawl(host, port, msg)
-    idx = data.find('HTTP/')
-    if idx != -1:
-        statusCode = data[idx+8:idx+13]
-        sys.stdout.write("status code {}\n".format(statusCode))
+    count = 0
+    while not Q.empty():
+        URL = Q.get()
+        count += 1
+        host, port, path, query  = myparser.parse(URL)
+        print('URL: {}'.format(URL))
+        print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
+
+        # TODO: Use Set() for unique ip adresses
+        # TODO: Hint Use a dict data type for How many links in this link? keyword "href" for counting 
+        # TODO: For politeness, the code will need to hit only unique IPs (Check if the ip is unique)
+        # TODO: Abort all pages that takes longer than 10 secs or are more than 2MB
+
+        msg = myrequest.headRequest(host) # build our request
+        data = mysocket.crawl(host, port, msg)
+        idx = data.find('HTTP/')
+        if idx != -1:
+            statusCode = data[idx+8:idx+13]
+            sys.stdout.write("status code {}\n".format(statusCode))
 
 
-    # Notice: switched out the cleanStr function. The responseParse function is what I used to rearrange the display
-    myparser.responseParser(data)
-    mysocket.close()
+        # Notice: switched out the cleanStr function. The responseParse function is what I used to rearrange the display
+        myparser.responseParser(data)
+        mysocket.close()
     
 
 # call main() method:
