@@ -1,7 +1,8 @@
 '''
 Team Members:
     Yassine Jaoudi
-    Akpan, Samuel Cyril  
+    Akpan, Samuel Cyril 
+    Samantha Clark 
 '''
 
 # resources: https://docs.python.org/3/howto/sockets.html
@@ -41,6 +42,17 @@ class TCPsocket:
             print("DNS failure ...")
             return None
         return ip, dns_time
+
+    # Check the uniquness of IP addreses
+    def IPUnique(self, ip, unique):
+        sys.stdout.write("         Checking IP uniqueness... ")
+        if ip not in unique:
+            unique.add(ip)
+            sys.stdout.write("passed\n")
+        else:
+            print('IP not Unique')
+        return unique
+                 
 
 
     # connect to a remote server: IP address, port
@@ -115,11 +127,11 @@ class TCPsocket:
             self.sock.close()
 
 
-    def crawl(self, host, port, msg):
+    def crawl(self, port, msg, myIp):
         self.createSocket()
-        getIpInfo = self.getIP(host)
-        myIp = getIpInfo[0]
-        print('         Doing DNS... done in {} ms, found {}'.format(round(getIpInfo[1],2), myIp))
+        # getIpInfo = self.getIP(host)
+        # myIp = getIpInfo[0]
+        # print('         Doing DNS... done in {} ms, found {}'.format(round(getIpInfo[1],2), myIp))
         self.connect(myIp, port)
         self.send(msg)
         reply = self.receive()

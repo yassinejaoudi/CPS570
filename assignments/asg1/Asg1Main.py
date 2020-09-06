@@ -37,6 +37,8 @@ def main(): # function, method are the same
         exit(1)
     
     count = 0
+    uniqueIPs = set()
+
     while not Q.empty():
         URL = Q.get()
         count += 1
@@ -44,13 +46,16 @@ def main(): # function, method are the same
         print('URL: {}'.format(URL))
         print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
 
-        # TODO: Use Set() for unique ip adresses
         # TODO: Hint Use a dict data type for How many links in this link? keyword "href" for counting 
         # TODO: For politeness, the code will need to hit only unique IPs (Check if the ip is unique)
         # TODO: Abort all pages that takes longer than 10 secs or are more than 2MB
 
         msg = myrequest.headRequest(host) # build our request
-        data = mysocket.crawl(host, port, msg)
+        getIpInfo = mysocket.getIP(host)
+        myIp = getIpInfo[0]
+        print('         Doing DNS... done in {} ms, found {}'.format(round(getIpInfo[1],2), myIp))
+        uniqueIPs = mysocket.IPUnique(myIp, uniqueIPs)
+        data = mysocket.crawl(port, msg, myIp)
         idx = data.find('HTTP/')
         if idx != -1:
             statusCode = data[idx+8:idx+13]
