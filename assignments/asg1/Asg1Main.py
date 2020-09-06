@@ -24,9 +24,6 @@ def main(): # function, method are the same
 
     numThreads = sys.argv[1]
     filename = sys.argv[2]
-
-    print('\nSys.argv: ',sys.argv)
-    print('\nFilename: {} & numThreads: {}'.format(filename,numThreads))
     
     try:
         with open(filename) as file:
@@ -45,25 +42,33 @@ def main(): # function, method are the same
         host, port, path, query  = myparser.parse(URL)
         print('URL: {}'.format(URL))
         print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
+        getIpInfo = mysocket.getIP(host)
+        myIp = getIpInfo[0]
+        
+        sys.stdout.write("         Checking IP uniqueness... ")
+        if myIp not in uniqueIPs:
+            uniqueIPs.add(myIp)
+            sys.stdout.write("passed\n")
+            msg = myrequest.headRequest(host) # build our request
+            getIpInfo = mysocket.getIP(host)
+            myIp = getIpInfo[0]
+            print('         Doing DNS... done in {} ms, found {}'.format(round(getIpInfo[1],2), myIp))
+            # uniqueIPs = mysocket.IPUnique(myIp, uniqueIPs)
+            data = mysocket.crawl(port, msg, myIp)
+            idx = data.find('HTTP/')
+            if idx != -1:
+                statusCode = data[idx+8:idx+13]
+                sys.stdout.write("status code {}\n".format(statusCode))
 
+            # Notice: switched out the cleanStr function. The responseParse function is what I used to rearrange the display
+            myparser.responseParser(data)
+        else:
+            print('IP not unique\n')
+        
         # TODO: Hint Use a dict data type for How many links in this link? keyword "href" for counting 
         # TODO: For politeness, the code will need to hit only unique IPs (Check if the ip is unique)
         # TODO: Abort all pages that takes longer than 10 secs or are more than 2MB
-
-        msg = myrequest.headRequest(host) # build our request
-        getIpInfo = mysocket.getIP(host)
-        myIp = getIpInfo[0]
-        print('         Doing DNS... done in {} ms, found {}'.format(round(getIpInfo[1],2), myIp))
-        uniqueIPs = mysocket.IPUnique(myIp, uniqueIPs)
-        data = mysocket.crawl(port, msg, myIp)
-        idx = data.find('HTTP/')
-        if idx != -1:
-            statusCode = data[idx+8:idx+13]
-            sys.stdout.write("status code {}\n".format(statusCode))
-
-
-        # Notice: switched out the cleanStr function. The responseParse function is what I used to rearrange the display
-        myparser.responseParser(data)
+        
         mysocket.close()
     
 
