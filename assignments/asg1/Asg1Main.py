@@ -8,7 +8,7 @@ Team Members:
 # import libraries or classes
 import sys 
 import os 
-from Path import pathlib 
+#from Path import pathlib 
 from Asg1Socket import TCPsocket
 from Asg1Request import Request
 from Asg1Urlparser import URLparser
@@ -31,7 +31,7 @@ def main(): # function, method are the same
 
     print('\nSys.argv: ',sys.argv)
     print('\nFilename: {} & numThreads: {}'.format(filename,numThreads))
-    print("Opened {} with size {}".format(filename, os.stat.(filename).st_size))
+    ###print("Opened {} with size {}".format(filename, os.stat.(filename).st_size))
     
     try:
         with open(filename) as file:
