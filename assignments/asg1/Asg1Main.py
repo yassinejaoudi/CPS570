@@ -7,15 +7,18 @@ Team Members:
 
 # import libraries or classes
 import sys 
+import os 
+from Path import pathlib 
 from Asg1Socket import TCPsocket
 from Asg1Request import Request
 from Asg1Urlparser import URLparser
 from queue import Queue
 
 
+
 def main(): # function, method are the same
     if len(sys.argv) < 2:
-        print("Error: insufficient arguments \nCorrect Usage: <interpreter> <Program Name> <URL>")
+        print("Error: insufficient arguments \nCorrect Usage: <interpreter> <Program Name> <No. of threads> <URL>")
         sys.exit()
     mysocket = TCPsocket() # create an object of TCP socket
     myrequest = Request()
@@ -25,8 +28,10 @@ def main(): # function, method are the same
     numThreads = sys.argv[1]
     filename = sys.argv[2]
 
+
     print('\nSys.argv: ',sys.argv)
     print('\nFilename: {} & numThreads: {}'.format(filename,numThreads))
+    print("Opened {} with size {}".format(filename, os.stat.(filename).st_size))
     
     try:
         with open(filename) as file:
@@ -38,6 +43,7 @@ def main(): # function, method are the same
     
     count = 0
     uniqueIPs = set()
+    hlinks = 0
 
     while not Q.empty():
         URL = Q.get()
@@ -54,7 +60,9 @@ def main(): # function, method are the same
         getIpInfo = mysocket.getIP(host)
         myIp = getIpInfo[0]
         print('         Doing DNS... done in {} ms, found {}'.format(round(getIpInfo[1],2), myIp))
+        
         uniqueIPs = mysocket.IPUnique(myIp, uniqueIPs)
+
         data = mysocket.crawl(port, msg, myIp)
         idx = data.find('HTTP/')
         if idx != -1:
@@ -62,7 +70,7 @@ def main(): # function, method are the same
             sys.stdout.write("status code {}\n".format(statusCode))
 
 
-        # Notice: switched out the cleanStr function. The responseParse function is what I used to rearrange the display
+        
         myparser.responseParser(data)
         mysocket.close()
     
