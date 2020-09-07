@@ -42,6 +42,7 @@ def main(): # function, method are the same
     
     count = 0
     uniqueIPs = set()
+    uniqueHost = set()
     hlinks = 0
 
     while not Q.empty():
@@ -53,6 +54,13 @@ def main(): # function, method are the same
         getIpInfo = mysocket.getIP(host)
         myIp = getIpInfo[0]
         
+        sys.stdout.write("         Checking host uniqueness... ") #Correct Host/DNS
+        if host not in uniqueHost:
+            uniqueHost.add(host)
+            sys.stdout.write("passed\n")
+        else:
+            print('Host is not unique\n')
+            
         sys.stdout.write("         Checking IP uniqueness... ")
         if myIp not in uniqueIPs:
             uniqueIPs.add(myIp)
@@ -73,10 +81,11 @@ def main(): # function, method are the same
         else:
             print('IP not unique\n')
         
+        
         # TODO: Hint Use a dict data type for How many links in this link? keyword "href" for counting 
         # TODO: For politeness, the code will need to hit only unique IPs (Check if the ip is unique)
         # TODO: Abort all pages that takes longer than 10 secs or are more than 2MB
-        
+
         mysocket.close()
     
 

@@ -43,6 +43,18 @@ class TCPsocket:
             return None
         return ip, dns_time
 
+     #Block duplicate hostnames
+    def hostUnique(self, host, uniqueHost):
+
+        sys.stdout.write("         Checking uniqueness of host... ")
+        if host not in uniqueHost:
+            uniqueHost.add(host)
+            print("passed\n")
+
+        else:
+            print('Host is not unique.')
+        return uniqueHost
+
     # Check the uniquness of IP addreses
     def IPUnique(self, ip, unique):
         sys.stdout.write("         Checking IP uniqueness... ")
