@@ -8,7 +8,10 @@ Team Members:
 # import libraries or classes
 import sys 
 import os 
+<<<<<<< HEAD
 #from Path import pathlib 
+=======
+>>>>>>> 072540a4ffe02df8ad8b79fad51d9d698da7d682
 from Asg1Socket import TCPsocket
 from Asg1Request import Request
 from Asg1Urlparser import URLparser
@@ -17,7 +20,7 @@ from queue import Queue
 
 
 def main(): # function, method are the same
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 3:
         print("Error: insufficient arguments \nCorrect Usage: <interpreter> <Program Name> <No. of threads> <URL>")
         sys.exit()
     mysocket = TCPsocket() # create an object of TCP socket
@@ -31,8 +34,13 @@ def main(): # function, method are the same
 
     print('\nSys.argv: ',sys.argv)
     print('\nFilename: {} & numThreads: {}'.format(filename,numThreads))
+<<<<<<< HEAD
     ###print("Opened {} with size {}".format(filename, os.stat.(filename).st_size))
     
+=======
+    print("Opened {} with size {} bytes".format(filename, os.stat(filename).st_size))
+    sys.exit()
+>>>>>>> 072540a4ffe02df8ad8b79fad51d9d698da7d682
     try:
         with open(filename) as file:
             for line in file:
