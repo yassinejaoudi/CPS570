@@ -8,7 +8,7 @@
 Use the following command to run the code:
 
 ```bash
-python Asg1Main.py 1 URL-input.txt
+python Asg1Main.py 1 URL-input-100.txt
 ```
 
 The code accepts two arguments, first one indicates the number of threads to run and the second one the input file
