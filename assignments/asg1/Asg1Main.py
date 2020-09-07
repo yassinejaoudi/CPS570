@@ -28,14 +28,10 @@ def main(): # function, method are the same
     numThreads = sys.argv[1]
     filename = sys.argv[2]
 
-
-    print('\nFilename: {} & numThreads: {}'.format(filename,numThreads))
-<<<<<<< HEAD
+    print('\nFilename: {} & numThreads: {}'.format(filename, numThreads))
     print("Opened {} with size {} bytes".format(filename, os.stat(filename).st_size))
-    sys.exit()
-=======
-    
->>>>>>> 072540a4ffe02df8ad8b79fad51d9d698da7d682
+   
+
     try:
         with open(filename) as file:
             for line in file:
