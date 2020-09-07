@@ -1,7 +1,7 @@
 # 
 
 
-from tcpsocket import TCPsocket 
+from Asg1Socket import TCPsocket 
 from urlparser import URLparser 
 from request import Request 
 from queue import Queue 
@@ -21,7 +21,7 @@ def main():
         print('No such file')
         exit(1)
     count = 0
-    while no Q.empty():
+    while not Q.empty():
         url = Q.get()
         count += 1 
         print(count)
