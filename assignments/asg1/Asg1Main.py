@@ -7,15 +7,18 @@ Team Members:
 
 # import libraries or classes
 import sys 
+import os 
+from Path import pathlib 
 from Asg1Socket import TCPsocket
 from Asg1Request import Request
 from Asg1Urlparser import URLparser
 from queue import Queue
 
 
+
 def main(): # function, method are the same
     if len(sys.argv) < 2:
-        print("Error: insufficient arguments \nCorrect Usage: <interpreter> <Program Name> <URL>")
+        print("Error: insufficient arguments \nCorrect Usage: <interpreter> <Program Name> <No. of threads> <URL>")
         sys.exit()
     mysocket = TCPsocket() # create an object of TCP socket
     myrequest = Request()
@@ -24,6 +27,11 @@ def main(): # function, method are the same
 
     numThreads = sys.argv[1]
     filename = sys.argv[2]
+
+
+    print('\nSys.argv: ',sys.argv)
+    print('\nFilename: {} & numThreads: {}'.format(filename,numThreads))
+    print("Opened {} with size {}".format(filename, os.stat.(filename).st_size))
     
     try:
         with open(filename) as file:
@@ -35,6 +43,7 @@ def main(): # function, method are the same
     
     count = 0
     uniqueIPs = set()
+    hlinks = 0
 
     while not Q.empty():
         URL = Q.get()
