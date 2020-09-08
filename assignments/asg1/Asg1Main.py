@@ -52,6 +52,9 @@ def main(): # function, method are the same
         print('URL: {}'.format(URL))
         print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
         getIpInfo = mysocket.getIP(host)
+        if getIpInfo == None:
+            print("unable to get Ip")
+            continue
         myIp = getIpInfo[0]
         
         sys.stdout.write("         Checking host uniqueness... ") #Correct Host/DNS
