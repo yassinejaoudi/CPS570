@@ -39,7 +39,7 @@ class TCPsocket:
             dns_end = time.time()
             dns_time = (dns_end - dns_start) * 1000 # in ms 
         except socket.gaierror:
-            print("DNS failure ...")
+            print("DNS failure... Unable to obtain IP address")
             return None
         return ip, dns_time
 
