@@ -8,7 +8,6 @@ Team Members:
 # import libraries or classes
 import sys 
 import os 
-#from Path import pathlib 
 from Asg1Socket import TCPsocket
 from Asg1Request import Request
 from Asg1Urlparser import URLparser
@@ -28,7 +27,6 @@ def main(): # function, method are the same
     numThreads = sys.argv[1]
     filename = sys.argv[2]
 
-    print('\nFilename: {} & numThreads: {}'.format(filename, numThreads))
     print("Opened {} with size {} bytes".format(filename, os.stat(filename).st_size))
    
 
@@ -51,52 +49,19 @@ def main(): # function, method are the same
         host, port, path, query  = myparser.parse(URL)
         print('URL: {}'.format(URL))
         print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
-        getIpInfo = mysocket.getIP(host)
-        if getIpInfo == None:
-            print("unable to get Ip")
-            continue
-        myIp = getIpInfo[0]
         
-        sys.stdout.write("         Checking host uniqueness... ") #Correct Host/DNS
-        if host not in uniqueHost:
-            uniqueHost.add(host)
-            sys.stdout.write("passed\n")
-        else:
-            print('Host is not unique\n')
-            
-        sys.stdout.write("         Checking IP uniqueness... ")
-        if myIp not in uniqueIPs:
-            uniqueIPs.add(myIp)
-            sys.stdout.write("passed\n")
-            msg = myrequest.headRequest(host) # build our request
-            getIpInfo = mysocket.getIP(host)
-            myIp = getIpInfo[0]
-            print('         Doing DNS... done in {} ms, found {}'.format(round(getIpInfo[1],2), myIp))
-            # uniqueIPs = mysocket.IPUnique(myIp, uniqueIPs)
-            data = mysocket.crawl(port, msg, myIp)
-            idx = data.find('HTTP/')
-            if idx != -1:
-                statusCode = data[idx+8:idx+13]
-                sys.stdout.write("status code {}\n".format(statusCode))
-
-            # Notice: switched out the cleanStr function. The responseParse function is what I used to rearrange the display
-            myparser.responseParser(data)
-        else:
-            print('IP not unique\n')
+        msg = myrequest.headRequest(host) # build our request
+        data = mysocket.crawl(port, msg, host)
+        idx = data.find('HTTP/')
+        if idx != -1:
+            statusCode = data[idx+8:idx+13]
+            sys.stdout.write("status code {}\n".format(statusCode))
+        # Notice: switched out the cleanStr function. The responseParse function is what I used to rearrange the display
+        myparser.responseParser(data)
         
-        
-        # TODO: Hint Use a dict data type for How many links in this link? keyword "href" for counting 
-        # TODO: For politeness, the code will need to hit only unique IPs (Check if the ip is unique)
-        # TODO: Abort all pages that takes longer than 10 secs or are more than 2MB
-
         mysocket.close()
     
 
 # call main() method:
 if __name__ == "__main__":
    main()
-
-# TODO: Things to check before submitting the assignment:
-    # writing poorly designed or convoluted code, not checking for errors in every API you call, 
-    # and allowing buffer overflows, access violations, debug-assertion failures,
-    # heap corruption, synchronization bugs, memory leaks, or any conditions that lead to a crash

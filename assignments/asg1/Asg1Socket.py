@@ -38,33 +38,11 @@ class TCPsocket:
             ip = socket.gethostbyname(hostname)   # ip is a local variable to getIP(hostname), ip is of string type
             dns_end = time.time()
             dns_time = (dns_end - dns_start) * 1000 # in ms 
+            print('         Doing DNS... done in {} ms, found {}'.format(round(dns_time,2), ip))
         except socket.gaierror:
             print("DNS failure... Unable to obtain IP address")
             return None
-        return ip, dns_time
-
-     #Block duplicate hostnames
-    def hostUnique(self, host, uniqueHost):
-
-        sys.stdout.write("         Checking uniqueness of host... ")
-        if host not in uniqueHost:
-            uniqueHost.add(host)
-            print("passed\n")
-
-        else:
-            print('Host is not unique.')
-        return uniqueHost
-
-    # Check the uniquness of IP addreses
-    def IPUnique(self, ip, unique):
-        sys.stdout.write("         Checking IP uniqueness... ")
-        if ip not in unique:
-            unique.add(ip)
-            sys.stdout.write("passed\n")
-        else:
-            print('IP not Unique')
-        return unique
-                 
+        return ip
 
 
     # connect to a remote server: IP address, port
@@ -139,11 +117,9 @@ class TCPsocket:
             self.sock.close()
 
 
-    def crawl(self, port, msg, myIp):
+    def crawl(self, port, msg, host, myIp):
         self.createSocket()
-        # getIpInfo = self.getIP(host)
-        # myIp = getIpInfo[0]
-        # print('         Doing DNS... done in {} ms, found {}'.format(round(getIpInfo[1],2), myIp))
+        # myIp = self.getIP(host)
         self.connect(myIp, port)
         self.send(msg)
         reply = self.receive()
