@@ -73,25 +73,31 @@ class MyThread (threading.Thread):
                 self.sharedIP.add(myIp)
                 sys.stdout.write("         Checking IP uniqueness... ")
                 cIpSize = len(self.sharedIP)
+                self.sharedLock.release()
 
                 if (cIpSize > pIpSize):
                     sys.stdout.write('passed' + '\n')
                     msg = myrequest.headRequest(host) # build our request
+                    self.sharedLock.acquire()
                     data = mysocket.crawl(port, msg, host, myIp)
+                    # self.sharedLock.release()
                     idx = data.find('HTTP/')
                     if idx != -1:
                         statusCode = data[idx+8:idx+13]
                         if (statusCode != '200 OK'):
                             sys.stdout.write("status code {}\n".format(statusCode))
                             myparser.responseParser(data)
-                            # mysocket.close()
+                            mysocket.close()
                         else:
                             mysocket.close()
+                    self.sharedLock.release()
                 else:
-                    sys.stdout.write('IP not unique' + '\n')
+                    sys.stdout.write(' NOT unique' + '\n')
             else:
-                sys.stdout.write('host not unique' + '\n')
+                sys.stdout.write(' NOT unique' + '\n')
             # time.sleep(1) #given url, parse it, get ip address, check if ip is unique, ...
+            print('\nQueue length: ',len(self.sharedQ.queue))
+            continue
         print("thread %d thread existing " % (self.threadID))
 
 def main():
