@@ -8,7 +8,7 @@
 Use the following command to run the code:
 
 ```bash
-python Asg1Main.py 1 URL-input-100.txt
+python Asg1CrawlThread.py 1 URL-input-100.txt
 ```
 
 The code accepts two arguments, first one indicates the number of threads to run and the second one the input file
@@ -27,7 +27,7 @@ The code for this assignment needs to meet the following items to meet a perfect
 | **Function**  | **Points**  | **Break down**  | **Item**  | **Samantha** | **Samuel** | **Yassine** | 
 |---------------|-------------|-----------------|-----------|--------------|------------|-------------|
 |  **Output**  | 11  | 1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />2<br />  | Show Input file size<br />Correct URLs being crawled<br />Correct DNS results<br />Print host checks<br />Print IP checks<br />Timing of robots connect()<br />Timing of robots recv()<br />Correct robots page size<br />Correct robots HTTP status<br />Correct page download results<br />  | <br />:recycle:<br />:heavy_check_mark:<br />:heavy_check_mark:<br /><br /><br /><br /><br /><br /><br /> | :recycle:<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> | <br /><br /><br /><br /><br />:construction:<br />:construction:<br /><br /><br />:construction:<br /> |
-|  **Logic**  | 8  | 2<br />2<br />2<br />2<br />  | Load multiple pages<br />Block duplicate hosts<br />Block duplicate IPs<br />Block loading robots-prohibited pages<br />  | :construction:<br />:recycle:<br /><br /><br /> | <br /><br /><br /><br />  |  <br /><br />:heavy_check_mark:<br />:construction:<br /> |
+|  **Logic**  | 8  | 2<br />2<br />2<br />2<br />  | Load multiple pages<br />Block duplicate hosts<br />Block duplicate IPs<br />Block loading robots-prohibited pages<br />  | :construction:<br />:heavy_check_mark:<br /><br /><br /> | <br /><br /><br /><br />  |  <br /><br />:heavy_check_mark:<br />:construction:<br /> |
 |**Robot errors**| 5  | 1<br />1<br />1<br />1<br />1<br />  |  Notify of connect failure<br /> Notify of recv failure<br /> Notify of non-HTTP reply<br />Report Slow download<br />Report exceeding max<br />  | <br /><br /><br /><br /><br />  | <br /><br /><br /><br /><br /> |  <br /><br /><br /><br /><br /> |
 |  **Other**  | 1  | 1  | No Missing files for compilation  |  |   |   |
 
