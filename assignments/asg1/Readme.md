@@ -31,8 +31,12 @@ The code for this assignment needs to meet the following items to meet a perfect
 |**Robot errors**| 5  | 1<br />1<br />1<br />1<br />1<br />  |  Notify of connect failure<br /> Notify of recv failure<br /> Notify of non-HTTP reply<br />Report Slow download<br />Report exceeding max<br />  | <br /><br /><br /><br /><br />  | <br /><br /><br /><br /><br /> |  <br /><br /><br /><br /><br /> |
 |  **Other**  | 1  | 1  | No Missing files for compilation  |  |   |   |
 
+## :bug: Bug Fixes :bug: :
 
-
+| **Bug** | **Status** | **Fix Implemented** |
+|---------|------------|---------------------|
+| While loop stuck on the first recieved Q element |  Fixed :heavy_check_mark: | Inside the if statement, there was a need of releasing the lock after crawling function which was missing |
+| Q while loop stops at URL 88 | | |
 ## Code Output:
 
 
