@@ -90,7 +90,15 @@ class MyThread (threading.Thread):
                             mysocket.close()
                         else:
                             mysocket.close()
+                     #Parse current webpage to look for other URL's (links) on it
+
+                    sys.stdout.write("         Parsing Page... ")
+                    currentURL = url[0]
+                    print(currentURL)
+                    myparser.parsePage(currentURL)
+                  
                     self.sharedLock.release()
+
                 else:
                     sys.stdout.write(' NOT unique' + '\n')
             else:

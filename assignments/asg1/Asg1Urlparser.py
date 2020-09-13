@@ -1,8 +1,14 @@
 '''
 Team Members:
     Yassine Jaoudi
-    Akpan, Samuel Cyril  
+    Akpan, Samuel Cyril 
+    Samantha Clark  
 '''
+from urllib.request import urlopen
+import urllib
+from bs4 import BeautifulSoup
+import html
+import requests
 
 # urlparser.py
 class URLparser:
@@ -10,6 +16,7 @@ class URLparser:
     def __init__(self):
         self.port = 80
 
+    
     def parse(self, string): # string is a url
         self.query = '' # default query is an empty string
         self.path = '/' # default path
@@ -65,3 +72,21 @@ class URLparser:
             print('\n----------------------------------------------------------')
             for i in range(len(data)):
                 print(data[i])
+
+    def parsePage(self, URL):
+        links = []
+        try:
+            html = urlopen(URL)
+             
+            bsObj = BeautifulSoup(html.read())
+                    
+            for link in bsObj.findAll('a'):
+                links.append(link.get('href'))
+            print("         Links... ", len(links))
+            
+        except urllib.error.HTTPError as exception:
+            print(exception)
+
+      
+        
+        
