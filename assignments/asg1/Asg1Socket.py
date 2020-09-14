@@ -7,8 +7,11 @@ Team Members:
 
 # resources: https://docs.python.org/3/howto/sockets.html
 
-import socket, select, time, sys, urllib.request
+import socket, select, time, sys, urllib.request, requests
 from Asg1Request import Request 
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
+from Asg1Urlparser import URLparser
 
 TIMEOUT = 10 # unit is seconds
 BUF_SIZE = 1024 # unit is bytes ##was 4096
@@ -46,38 +49,38 @@ class TCPsocket:
         return ip
     
     def checkrobots(self,hostname):
+        useragent = requests.utils.default_user_agent()
         myrequest = Request()
+        myparser  = URLparser()
         self.host = hostname
-        robotlink = "http://" + hostname + "/robots.txt"
+        robotlink = "https://" + hostname + "/robots.txt"
         sys.stdout.write("         Connecting on robots... ")
         startrbtTime= time.time()
-        #sys.stdout.write("         Loading... done ")
-        
-        
+        headers = {}
+        headers = [useragent]
+        #resp = requests.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=5, verify=False)
+        session = requests.Session()
+        retry = Retry(connect=3, backoff_factor=0.5)
+        adapter = HTTPAdapter(max_retries=retry)
+        session.mount('http://', adapter)
+        session.mount('https://', adapter)
         try:
-            print()
-            print("robotlink: ", robotlink)
-            msg = myrequest.headRequest(hostname)
-            resp = urllib.request.urlopen(msg)
-            print('Bug?')
-            sys.exit()
-            sys.stdout.write(" done in {} ms with {} bytes".format(round(rbt_time,2), len(resp.read())))
-            
-            
-            
-        except urllib.error.HTTPError as e:
-            error = e.code
-                    
-            finishrbtTime = time.time()
-            rbt_time = finishrbtTime - startrbtTime
-            sys.exit()
-            sys.stdout.write("Verifying header... status code {}".format(error))
-
+            resp = session.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=5)
+        except:
+            pass
         
-         
-
-
-
+        if resp != None:
+            finishrbtTime = time.time()
+            rbt_time = finishrbtTime - startrbtTime 
+            sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), len(str(resp))))
+        else:
+            print("something jus happened!")
+            
+        
+        
+        sys.stdout.write("         Verifying header... status code {} \n".format(resp.status_code))
+        #print(resp.text)
+        
 
 
     # connect to a remote server: IP address, port
@@ -159,3 +162,24 @@ class TCPsocket:
         self.send(msg)
         reply = self.receive()
         return reply
+
+
+"""        
+        try:
+            print()
+            print("robotlink: ", robotlink)
+            headers = {}
+            headers['User-Agent'] = useragent
+            
+            #req = urllib.request.Request(robotlink, headers = headers)
+"""            
+        
+            
+        
+            
+            
+"""            
+        except urllib.error.HTTPError as e:
+            error = e.code
+            #print(error)
+"""   

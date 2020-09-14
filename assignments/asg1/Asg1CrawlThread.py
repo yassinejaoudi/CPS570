@@ -81,7 +81,7 @@ class MyThread (threading.Thread):
                     self.sharedLock.acquire()
                     mysocket.checkrobots(host)
                     
-                    sys.exit()
+                    #sys.exit()
                     data = mysocket.crawl(port, msg, host, myIp)
                     # self.sharedLock.release()
                     idx = data.find('HTTP/')
