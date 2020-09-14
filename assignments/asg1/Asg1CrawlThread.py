@@ -79,6 +79,9 @@ class MyThread (threading.Thread):
                     sys.stdout.write('passed' + '\n')
                     msg = myrequest.headRequest(host) # build our request
                     self.sharedLock.acquire()
+                    mysocket.checkrobots(host)
+                    
+                    sys.exit()
                     data = mysocket.crawl(port, msg, host, myIp)
                     # self.sharedLock.release()
                     idx = data.find('HTTP/')

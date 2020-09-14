@@ -7,7 +7,8 @@ Team Members:
 
 # resources: https://docs.python.org/3/howto/sockets.html
 
-import socket, select, time, sys
+import socket, select, time, sys, urllib.request
+from Asg1Request import Request 
 
 TIMEOUT = 10 # unit is seconds
 BUF_SIZE = 1024 # unit is bytes ##was 4096
@@ -43,6 +44,40 @@ class TCPsocket:
             print("DNS failure... Unable to obtain IP address")
             return None
         return ip
+    
+    def checkrobots(self,hostname):
+        myrequest = Request()
+        self.host = hostname
+        robotlink = "http://" + hostname + "/robots.txt"
+        sys.stdout.write("         Connecting on robots... ")
+        startrbtTime= time.time()
+        #sys.stdout.write("         Loading... done ")
+        
+        
+        try:
+            print()
+            print("robotlink: ", robotlink)
+            msg = myrequest.headRequest(hostname)
+            resp = urllib.request.urlopen(msg)
+            print('Bug?')
+            sys.exit()
+            sys.stdout.write(" done in {} ms with {} bytes".format(round(rbt_time,2), len(resp.read())))
+            
+            
+            
+        except urllib.error.HTTPError as e:
+            error = e.code
+                    
+            finishrbtTime = time.time()
+            rbt_time = finishrbtTime - startrbtTime
+            sys.exit()
+            sys.stdout.write("Verifying header... status code {}".format(error))
+
+        
+         
+
+
+
 
 
     # connect to a remote server: IP address, port
