@@ -47,7 +47,7 @@ class TCPsocket:
             print("DNS failure... Unable to obtain IP address")
             return None
         return ip
-    
+
     def checkrobots(self,hostname):
         useragent = requests.utils.default_user_agent()
         self.host = hostname
@@ -66,30 +66,23 @@ class TCPsocket:
         connTime = connFinish - connSt
         sys.stdout.write(" done in {} ms\n".format(connTime))
 
-        try:
-            sys.stdout.write("         Loading... ")
-            startrbtTime= time.time()
-            resp = session.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=5)
+        sys.stdout.write("         Loading... ")
+        startrbtTime= time.time()
+        if startrbtTime < 5:
+            resp = session.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=0.5)
+            print('iam here')
             finishrbtTime = time.time()
             rbt_time = finishrbtTime - startrbtTime
-            # sys.stdout.write(" done in {} ms\n".format(round(rbt_time,2))
-        except:
-            pass
         
-        if resp != None:
-            #sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), len(str(resp))))
-            if "content-length" in resp.headers:            
-                sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), resp.headers['content-length']))
-            else:
-                sys.stdout.write(" done in {} ms with no content length\n".format(round(rbt_time,2)))
+            if resp != None:
+                if "content-length" in resp.headers:            
+                    sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), resp.headers['content-length']))
+                else:
+                    sys.stdout.write(" done in {} ms with no content length\n".format(round(rbt_time,2)))
 
+            sys.stdout.write("         Verifying header... status code {} \n".format(resp.status_code))
         else:
-            print("something jus happened!")
-            
-        
-        
-        sys.stdout.write("         Verifying header... status code {} \n".format(resp.status_code))
-        #print(resp.text)
+            sys.stdout.write("Not Loaded \n")
         
 
 

@@ -29,7 +29,7 @@ class MyThread (threading.Thread):
         self.sharedQ = urlqueue
         self.sharedHost = uniqueHost
         self.sharedIP = uniqueIPs
-
+    
     def run(self): #override the run() method
         #define job for each thread
         print(self.name + " thread starting ")
