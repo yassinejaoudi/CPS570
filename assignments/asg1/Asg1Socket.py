@@ -50,28 +50,33 @@ class TCPsocket:
     
     def checkrobots(self,hostname):
         useragent = requests.utils.default_user_agent()
-        myrequest = Request()
-        myparser  = URLparser()
         self.host = hostname
         robotlink = "https://" + hostname + "/robots.txt"
-        sys.stdout.write("         Connecting on robots... ")
-        startrbtTime= time.time()
         headers = {}
         headers = [useragent]
         #resp = requests.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=5, verify=False)
         session = requests.Session()
+        sys.stdout.write("         Connecting on robots... ")
+        connSt = time.time()
         retry = Retry(connect=3, backoff_factor=0.5)
         adapter = HTTPAdapter(max_retries=retry)
         session.mount('http://', adapter)
         session.mount('https://', adapter)
+        connFinish = time.time()
+        connTime = connFinish - connSt
+        sys.stdout.write(" done in {} ms\n".format(connTime))
+
         try:
+            sys.stdout.write("         Loading... ")
+            startrbtTime= time.time()
             resp = session.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=5)
+            finishrbtTime = time.time()
+            rbt_time = finishrbtTime - startrbtTime
+            # sys.stdout.write(" done in {} ms\n".format(round(rbt_time,2))
         except:
             pass
         
         if resp != None:
-            finishrbtTime = time.time()
-            rbt_time = finishrbtTime - startrbtTime 
             #sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), len(str(resp))))
             if "content-length" in resp.headers:            
                 sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), resp.headers['content-length']))
