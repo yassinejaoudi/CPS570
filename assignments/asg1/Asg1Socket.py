@@ -72,7 +72,7 @@ class TCPsocket:
         if resp != None:
             finishrbtTime = time.time()
             rbt_time = finishrbtTime - startrbtTime 
-            sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), len(str(resp))))
+            sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), resp.headers['content-length'])
         else:
             print("something jus happened!")
             
