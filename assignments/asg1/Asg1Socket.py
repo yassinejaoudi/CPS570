@@ -74,7 +74,7 @@ class TCPsocket:
             rbt_time = finishrbtTime - startrbtTime 
             sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), len(str(resp))))
         else:
-            print("something jus happened!")
+            print("something just happened!")
             
         
         

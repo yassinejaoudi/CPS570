@@ -80,10 +80,11 @@ class MyThread (threading.Thread):
                     msg = myrequest.headRequest(host) # build our request
                     self.sharedLock.acquire()
                     mysocket.checkrobots(host)
-                    
-                    #sys.exit()
+                    currentURL = url[0]
+                    myparser.parsePage(currentURL)
+
                     data = mysocket.crawl(port, msg, host, myIp)
-                    # self.sharedLock.release()
+                    #self.sharedLock.release()
                     idx = data.find('HTTP/')
                     if idx != -1:
                         statusCode = data[idx+8:idx+13]
@@ -93,13 +94,7 @@ class MyThread (threading.Thread):
                             mysocket.close()
                         else:
                             mysocket.close()
-                     #Parse current webpage to look for other URL's (links) on it
-
-                    sys.stdout.write("         Parsing Page... ")
-                    currentURL = url[0]
-                    print(currentURL)
-                    myparser.parsePage(currentURL)
-                  
+                                     
                     self.sharedLock.release()
 
                 else:
