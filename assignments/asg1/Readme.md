@@ -29,7 +29,7 @@ The code for this assignment needs to meet the following items to meet a perfect
 |  **Output**  | 11  | 1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />2<br />  | Show Input file size<br />Correct URLs being crawled<br />Correct DNS results<br />Print host checks<br />Print IP checks<br />Timing of robots connect()<br />Timing of robots recv()<br />Correct robots page size<br />Correct robots HTTP status<br />Correct page download results<br />  | <br />:heavy_check_mark:<br />:heavy_check_mark:<br />:heavy_check_mark:<br /><br /><br /><br /><br /><br /><br /> | :heavy_check_mark:<br /><br /><br /><br /><br />:heavy_check_mark:<br />:heavy_check_mark:<br /><br />:heavy_check_mark:<br /><br />| <br /><br /><br /><br />:heavy_check_mark:<br /><br /><br /><br /><br />:heavy_check_mark:<br /> |
 |  **Logic**  | 8  | 2<br />2<br />2<br />2<br />  | Load multiple pages<br />Block duplicate hosts<br />Block duplicate IPs<br />Block loading robots-prohibited pages<br />  | :heavy_check_mark:<br />:heavy_check_mark:<br /><br /><br /> | <br /><br /><br /><br />  |  <br /><br />:heavy_check_mark:<br />:heavy_check_mark:<br /> |
 |**Robot errors**| 5  | 1<br />1<br />1<br />1<br />1<br />  |  Notify of connect failure<br /> Notify of recv failure<br /> Notify of non-HTTP reply<br />Report Slow download<br />Report exceeding max<br />  | <br /><br /><br /><br /><br />  | <br /><br /><br />:heavy_check_mark:<br /><br /> |  :heavy_check_mark:<br />:heavy_check_mark:<br />:heavy_check_mark:<br /><br /><br /> |
-|  **Other**  | 1  | 1  | No Missing files for compilation  |  |   |   |
+|  **Other**  | 1  | 1  | No Missing files for compilation  |  |   | :heavy_check_mark:  |
 
 ## :bug: Bug Fixes :bug: :
 
