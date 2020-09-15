@@ -87,7 +87,7 @@ class URLparser:
             timeParse = parseFinish - parseStart
             sys.stdout.write("done in {} ms with {} links \n".format(timeParse, len(links)))
             
-        except urllib.error.HTTPError as exception:
+        except Exception as exception:
             print(exception)
 
       

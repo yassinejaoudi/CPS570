@@ -19,7 +19,7 @@ BUF_SIZE = 1024 # unit is bytes ##was 4096
 class TCPsocket:
 
     # Set the default timeout in seconds
-    timeout = 10
+    timeout = 20
     socket.setdefaulttimeout(timeout)
 
     # list our instance variables
@@ -56,38 +56,46 @@ class TCPsocket:
     def checkrobots(self,hostname):
         useragent = requests.utils.default_user_agent()
         self.host = hostname
-        robotlink = "https://" + hostname + "/robots.txt"
-        headers = {}
-        headers = [useragent]
-        #resp = requests.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=5, verify=False)
-        session = requests.Session()
-        sys.stdout.write("         Connecting on robots... ")
-        connSt = time.time()
-        retry = Retry(connect=3, backoff_factor=0.5)
-        adapter = HTTPAdapter(max_retries=retry)
-        session.mount('http://', adapter)
-        session.mount('https://', adapter)
-        connFinish = time.time()
-        connTime = connFinish - connSt
-        sys.stdout.write(" done in {} ms\n".format(connTime))
+        hostblist = ["allybruener.com", "ask.arabnews.com"]
+        if hostname not in hostblist:
+            robotlink = "https://" + hostname + "/robots.txt"
+            headers = {}
+            headers = [useragent]
+            #resp = requests.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=5, verify=False)
+            session = requests.Session()
+            sys.stdout.write("         Connecting on robots... ")
+            connSt = time.time()
+            retry = Retry(connect=3, backoff_factor=0.5)
+            adapter = HTTPAdapter(max_retries=retry)
+            session.mount('http://', adapter)
+            session.mount('https://', adapter)
+            connFinish = time.time()
+            connTime = connFinish - connSt
+            sys.stdout.write(" done in {} ms\n".format(connTime))
 
-        sys.stdout.write("         Loading... ")
-        startrbtTime= time.time()
-        if startrbtTime < 5:
-            resp = session.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=0.5)
-            print('iam here')
-            finishrbtTime = time.time()
-            rbt_time = finishrbtTime - startrbtTime
+            sys.stdout.write("         Loading... ")
+            startrbtTime= time.time()
+            # print('startrbtTime {} & type: {}'.format(startrbtTime, type(startrbtTime)))
+            # if startrbtTime < 10:
+            try:
+                resp = session.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=(5, 5), stream=False)
+            #print('iam here')
+                finishrbtTime = time.time()
+                rbt_time = finishrbtTime - startrbtTime
         
-            if resp != None:
-                if "content-length" in resp.headers:            
-                    sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), resp.headers['content-length']))
+                if resp != None:
+                    if "content-length" in resp.headers:            
+                        sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), resp.headers['content-length']))
+                    else:
+                        sys.stdout.write(" done in {} ms with no content length\n".format(round(rbt_time,2)))
                 else:
-                    sys.stdout.write(" done in {} ms with no content length\n".format(round(rbt_time,2)))
-
-            sys.stdout.write("         Verifying header... status code {} \n".format(resp.status_code))
-        else:
-            sys.stdout.write("Not Loaded \n")
+                    sys.stdout.write(errormsg)
+                sys.stdout.write("         Verifying header... status code {} \n".format(resp.status_code))
+            except Exception as e:
+                errormsg = str(e)
+        
+            # else:
+            #     sys.stdout.write("Not Loaded \n")
         
 
 
