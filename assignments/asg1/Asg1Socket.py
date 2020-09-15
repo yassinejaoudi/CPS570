@@ -17,6 +17,11 @@ TIMEOUT = 10 # unit is seconds
 BUF_SIZE = 1024 # unit is bytes ##was 4096
 
 class TCPsocket:
+
+    # Set the default timeout in seconds
+    timeout = 10
+    socket.setdefaulttimeout(timeout)
+
     # list our instance variables
     # Constructor: create an object
     def __init__(self):
@@ -138,10 +143,13 @@ class TCPsocket:
             while True:         # use a loop to receive data until we receive all data
                 data = self.sock.recv(BUF_SIZE)  # returned chunk of data with max length BUF_SIZE. data is in bytes
                 if data == b'':  # if empty bytes
-                   break
+                    break
+                # elif (bytesRecd < 96000000):
+                #     break
                 else:
-                   reply += data  # append to reply
-                   bytesRecd += len(data)
+                    reply += data  # append to reply
+                    bytesRecd += len(data)
+
             rcv_end  = time.time()
             rcv_time = (rcv_end - rcv_start) * 1000 # in ms 
             sys.stdout.write('done in {} ms with {} bytes'.format(round(rcv_time,2), bytesRecd) + '\n')

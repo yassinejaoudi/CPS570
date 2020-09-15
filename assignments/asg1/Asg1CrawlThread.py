@@ -79,21 +79,26 @@ class MyThread (threading.Thread):
                     sys.stdout.write('passed' + '\n')
                     msg = myrequest.headRequest(host) # build our request
                     self.sharedLock.acquire()
-                    mysocket.checkrobots(host)
-                    currentURL = url[0]
-                    myparser.parsePage(currentURL)
+                    if query.find('download') == -1:
+                        mysocket.checkrobots(host)
+                        currentURL = url[0]
+                        myparser.parsePage(currentURL)
+                        self.sharedLock.release()
 
-                    data = mysocket.crawl(port, msg, host, myIp)
-                    #self.sharedLock.release()
-                    idx = data.find('HTTP/')
-                    if idx != -1:
-                        statusCode = data[idx+8:idx+13]
-                        if (statusCode != '200 OK'):
-                            sys.stdout.write("status code {}\n".format(statusCode))
-                            myparser.responseParser(data)
-                            mysocket.close()
-                        else:
-                            mysocket.close()
+                        self.sharedLock.acquire()
+                        data = mysocket.crawl(port, msg, host, myIp)
+                        idx = data.find('HTTP/')
+                        if idx != -1:
+                            statusCode = data[idx+8:idx+13]
+                            if (statusCode != '200 OK'):
+                                sys.stdout.write("status code {}\n".format(statusCode))
+                                myparser.responseParser(data)
+                                mysocket.close()
+                            else:
+                                mysocket.close()
+                    else:
+                        mysocket.close()
+                        # break
                                      
                     self.sharedLock.release()
 
