@@ -1,6 +1,6 @@
 ## Team Members:
 * Yassine Jaoudi
-* Akpan, Samuel Cyril
+* Samuel Akpan
 * Samantha Clark
 
 ## Usage:
