@@ -36,21 +36,20 @@ The code for this assignment needs to meet the following items to meet a perfect
 
 | **Bug** | **Status** | **Fix Implemented** | **Fixed by** |
 |---------|------------|---------------------|--------------|
-| While loop stuck on the first recieved Q element |  Fixed :heavy_check_mark: | Inside the if statement, there was a need of releasing the lock after crawling function which was missing | **YJ** |
-| No excpetion error for checking robots fct |  Fixed :heavy_check_mark: | Fixed by adding an expetion handling  | **SCA** |
+|   |    |   |   |
+| |    |    |   |
 
 
 ## Code Output:
 ![output](current_out_part2.png)
 
 ## Goal of this part 2 of the assignment:
-
-![Goal](part2_goal_output.png)
+### hw1.exe 10 URL-input-100.txt
+![Goal](part3_goal_output.png)
 
 ## Tasks done from previous assignment part:
 
-* Correct page size
-* Correct number of links
+
 
 ## :sparkles: Future Work :sparkles:
 
