@@ -45,7 +45,7 @@ The code for this assignment needs to meet the following items to meet a perfect
 
 ## Goal of this part 2 of the assignment:
 ### hw1.exe 10 URL-input-100.txt
-![Goal](part3_goal_output.png)
+![Goal](part3_goal_output1.png)
 
 ## Tasks done from previous assignment part:
 
