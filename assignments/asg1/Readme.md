@@ -8,7 +8,7 @@
 Use the following command to run the code:
 
 ```bash
-python Asg1CrawlThread.py 1 URL-input-100.txt
+python Asg1CrawlThread.py 10 URL-input-100.txt
 ```
 
 The code accepts two arguments, first one indicates the number of threads to run and the second one the input file
@@ -22,15 +22,16 @@ The code for this assignment needs to meet the following items to meet a perfect
 * :heavy_check_mark: Include this one if its done
 
 
-:rotating_light::rotating_light::rotating_light: Choose 4 or 5 tasks within the output and logic function as the other functions are either already implemented or are a quick fix just to split the work fairly.
+:rotating_light::rotating_light::rotating_light: Choose the interesting tasks you would like to work on.
 
 | **Function**  | **Points**  | **Break down**  | **Item**  | **Samantha** | **Samuel** | **Yassine** | 
 |---------------|-------------|-----------------|-----------|--------------|------------|-------------|
-|  **Running Output**  | 12  | 1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />  | Printouts every 2 seconds<br />Correct active threads<br />Correct queue size<br />Correct extracted URLs<br />Correct unique hosts<br />Correct DNS lookups<br />Correct Unique IPs()<br />Correct attempted robots<br />Correct crawled URLs<br />Correct parsed links<br />Correct pps<br />  Correct Mbps<br />   | :construction:<br />:construction:<br /> <br />:construction: <br /><br /><br /><br /><br /><br />:construction:<br /> <br /><br />| <br /><br /><br /><br /><br /> <br /> <br /><br /> <br /><br />| <br /><br /><br /><br /> <br /><br /><br /><br /><br /> <br /> |
-|  **Summary**  | 6  | 1<br />1<br />1<br />1<br />1<br />1<br />  | Correct URL processing rate<br />Correct DNS rate<br />Correct robots rate<br />Correct crawled rate/totals<br />Correct parser speed <br />Correct HTTP breakdown <br />  | :construction: <br />:construction:<br /><br /><br /><br /><br /> | <br /><br /><br /><br /><br />  |  <br /><br /> <br /> <br /><br /> |
+|  **Running Output**  | 12  | 1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />1<br />  | Printouts every 2 seconds<br />Correct active threads<br />Correct queue size<br />Correct extracted URLs<br />Correct unique hosts<br />Correct DNS lookups<br />Correct Unique IPs()<br />Correct attempted robots<br />Correct crawled URLs<br />Correct parsed links<br />Correct pps<br />  Correct Mbps<br />   | :construction:<br />:construction:<br /> <br />:construction: <br /><br /><br /><br /><br /><br />:construction:<br /> <br /><br />| <br /><br /><br /><br /><br /> <br /> <br /><br /> <br /><br />| <br /><br /><br />:construction:<br />:construction:<br /><br />:construction:<br /><br />:construction:<br />:construction:<br /> |
+|  **Summary**  | 6  | 1<br />1<br />1<br />1<br />1<br />1<br />  | Correct URL processing rate<br />Correct DNS rate<br />Correct robots rate<br />Correct crawled rate/totals<br />Correct parser speed <br />Correct HTTP breakdown <br />  | :construction: <br />:construction:<br /><br /><br /><br /><br /> | <br /><br /><br /><br /><br />  |  <br /><br /> <br /> :construction:<br />:construction:<br /> |
 |**Code**| 6  | 1<br />1<br />2<br />1<br />1<br />  |  >>20Mbps w/ 500 threads <br /> >>200MB RAM w/500 threads<br /> No deadlocks on exit<br />No issues with the file reader <br /> No improper stats thread<br />  | <br /><br /><br /><br /><br />  | <br /><br /><br /><br /><br /> |  <br /><br /><br /><br /><br /> |
 |  **Other**  | 1  | 1  | No Missing files for compilation  |  |   |   |
-|  **Report**  | 25  | 5<br />5<br />5<br />5<br />5<br />  | Lessons learned and trace<br />Google graph-size analysis<br />Yahoo band-width analysis<br /> Probability analysis<br /> Written Report<br />  |  <br /> <br /><br /><br />:construction:<br /> |  <br /> <br /><br /><br /> <br /> |   <br /> <br /><br /><br /> <br />|
+|  **Report**  | 25  | 5<br />5<br />5<br />5<br />5<br />  | Lessons learned and trace<br />Google graph-size analysis<br />Yahoo band-width analysis<br /> Probability analysis<br /> Written Report<br />  |  <br /> <br /><br /><br />:construction:<br /> |
+
 
 ## :bug: Bug Fixes :bug: :
 
@@ -41,12 +42,25 @@ The code for this assignment needs to meet the following items to meet a perfect
 
 
 ## Code Output:
-![output](current_out_part2.png)
+
 
 ## Goal of this part 2 of the assignment:
 ### hw1.exe 10 URL-input-100.txt
 ![Goal](part3_goal_output1.png)
 
+## Lessons learned and trace:
+* Git version control has been utilized and learned from the team members for better collaboration.
+* Team building aspects and workflow has been learned as we have a great team that is motivated to do the work, be there when another member of the team needs help with a certain task, and finish with great results.
+* Frequent and great communication throughout the team using zoom meeting or group chat.
+* Debbuging techniques.
+* Time management.
+:rotating_light: We need to add the technical lessons learned in this asg :rotating_light:
+
+## Google graph-size analysis:
+
+## Yahoo bandwidth analysis:
+
+## Probability analysis:
 
 ## Tasks done from previous assignment part:
 
