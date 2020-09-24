@@ -13,6 +13,14 @@ python Asg1CrawlThread.py 10 URL-input-100.txt
 
 The code accepts two arguments, first one indicates the number of threads to run and the second one the input file
 
+## Requirements:
+
+Python 3 with the packages included in the [requirements](CPS570/assignments/asg1/requirement.txt) file, use the following command to install:
+
+```bash
+pip install -r requirements.txt
+```
+
 ## ToDo list status:
 
 The code for this assignment needs to meet the following items to meet a perfect score.
