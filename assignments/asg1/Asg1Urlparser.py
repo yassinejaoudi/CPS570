@@ -76,7 +76,7 @@ class URLparser:
     def parsePage(self, URL):
         links = []
         try:
-            sys.stdout.write("         Parsing Page... ")
+            # sys.stdout.write("         Parsing Page... ")
             parseStart = time.time()
             html = urlopen(URL)
             bsObj = BeautifulSoup(html.read())
@@ -85,7 +85,7 @@ class URLparser:
                 links.append(link.get('href'))
             parseFinish = time.time()
             timeParse = parseFinish - parseStart
-            sys.stdout.write("done in {} ms with {} links \n".format(timeParse, len(links)))
+            # sys.stdout.write("done in {} ms with {} links \n".format(timeParse, len(links)))
             
         except Exception as exception:
             print(exception)

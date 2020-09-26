@@ -47,7 +47,7 @@ class TCPsocket:
             ip = socket.gethostbyname(hostname)   # ip is a local variable to getIP(hostname), ip is of string type
             dns_end = time.time()
             dns_time = (dns_end - dns_start) * 1000 # in ms 
-            print('         Doing DNS... done in {} ms, found {}'.format(round(dns_time,2), ip))
+            # print('         Doing DNS... done in {} ms, found {}'.format(round(dns_time,2), ip))
         except socket.gaierror:
             print("DNS failure... Unable to obtain IP address")
             return None
@@ -63,7 +63,7 @@ class TCPsocket:
             headers = [useragent]
             #resp = requests.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=5, verify=False)
             session = requests.Session()
-            sys.stdout.write("         Connecting on robots... ")
+            # sys.stdout.write("         Connecting on robots... ")
             connSt = time.time()
             retry = Retry(connect=3, backoff_factor=0.5)
             adapter = HTTPAdapter(max_retries=retry)
@@ -71,9 +71,9 @@ class TCPsocket:
             session.mount('https://', adapter)
             connFinish = time.time()
             connTime = connFinish - connSt
-            sys.stdout.write(" done in {} ms\n".format(connTime))
+            # sys.stdout.write(" done in {} ms\n".format(connTime))
 
-            sys.stdout.write("         Loading... ")
+            # sys.stdout.write("         Loading... ")
             startrbtTime= time.time()
             # print('startrbtTime {} & type: {}'.format(startrbtTime, type(startrbtTime)))
             # if startrbtTime < 10:
@@ -83,14 +83,14 @@ class TCPsocket:
                 finishrbtTime = time.time()
                 rbt_time = finishrbtTime - startrbtTime
         
-                if resp != None:
-                    if "content-length" in resp.headers:            
-                        sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), resp.headers['content-length']))
-                    else:
-                        sys.stdout.write(" done in {} ms with no content length\n".format(round(rbt_time,2)))
-                else:
+                if resp == None:
+                    # if "content-length" in resp.headers:            
+                    #     sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), resp.headers['content-length']))
+                    # else:
+                    #     sys.stdout.write(" done in {} ms with no content length\n".format(round(rbt_time,2)))
+                # else:
                     sys.stdout.write(errormsg)
-                sys.stdout.write("         Verifying header... status code {} \n".format(resp.status_code))
+                # sys.stdout.write("         Verifying header... status code {} \n".format(resp.status_code))
             except Exception as e:
                 errormsg = str(e)
         
@@ -110,10 +110,10 @@ class TCPsocket:
         try:
             conn_start = time.time()
             # print('         Connecting on page... ', end='')
-            sys.stdout.write("         Connecting on page... ")
+            # sys.stdout.write("         Connecting on page... ")
             self.sock.connect((ip, port))   # server address is defined by (ip, port)
             conn_end = time.time()
-            sys.stdout.write('done in {} ms'.format(round((conn_end - conn_start) * 1000,2)) + '\n')
+            # sys.stdout.write('done in {} ms'.format(round((conn_end - conn_start) * 1000,2)) + '\n')
         except socket.error as e:
             print("Failed to connect: {}".format(e))
             self.sock.close() 
@@ -147,7 +147,7 @@ class TCPsocket:
         # else reader has data to read
         try:
             rcv_start = time.time()
-            sys.stdout.write("         Loading... ")
+            # sys.stdout.write("         Loading... ")
             while True:         # use a loop to receive data until we receive all data
                 data = self.sock.recv(BUF_SIZE)  # returned chunk of data with max length BUF_SIZE. data is in bytes
                 if data == b'':  # if empty bytes
@@ -160,8 +160,8 @@ class TCPsocket:
 
             rcv_end  = time.time()
             rcv_time = (rcv_end - rcv_start) * 1000 # in ms 
-            sys.stdout.write('done in {} ms with {} bytes'.format(round(rcv_time,2), bytesRecd) + '\n')
-            sys.stdout.write("         Verifying header... ")
+            # sys.stdout.write('done in {} ms with {} bytes'.format(round(rcv_time,2), bytesRecd) + '\n')
+            # sys.stdout.write("         Verifying header... ")
         except socket.error as e:
             print("socket error in receive: {}".format(e))
             self.sock.close()

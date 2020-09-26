@@ -47,15 +47,15 @@ def main(): # function, method are the same
         URL = Q.get()
         count += 1
         host, port, path, query  = myparser.parse(URL)
-        print('URL: {}'.format(URL))
-        print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
+        # print('URL: {}'.format(URL))
+        # print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
         
         msg = myrequest.headRequest(host) # build our request
         data = mysocket.crawl(port, msg, host)
         idx = data.find('HTTP/')
         if idx != -1:
             statusCode = data[idx+8:idx+13]
-            sys.stdout.write("status code {}\n".format(statusCode))
+            # sys.stdout.write("status code {}\n".format(statusCode))
         # Notice: switched out the cleanStr function. The responseParse function is what I used to rearrange the display
         myparser.responseParser(data)
         

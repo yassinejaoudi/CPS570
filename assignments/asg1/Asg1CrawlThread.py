@@ -32,7 +32,7 @@ class MyThread (threading.Thread):
     
     def run(self): #override the run() method
         #define job for each thread
-        print(self.name + " thread starting ")
+        # print(self.name + " thread starting ")
         mysocket = TCPsocket() # create an object of TCP socket
         myrequest = Request()
         myparser  = URLparser()
@@ -48,35 +48,35 @@ class MyThread (threading.Thread):
                 self.sharedLock.release()
                 break
             url[0] = self.sharedQ.get() #remove and return an item from the queue
-            print("thread%d %d %s" % (self.threadID, self.sharedCount[0], url[0]))
+            # print("thread%d %d %s" % (self.threadID, self.sharedCount[0], url[0]))
             self.sharedCount[0] -= 1
             self.sharedLock.release() #end of critical section
 
             self.counter += 1
             host, port, path, query  = myparser.parse(url[0])
-            print('URL: {}'.format(url[0]))
-            print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
+            # print('URL: {}'.format(url[0]))
+            # print('         Parsing URL... host {}, port {}, path {}, request {}'.format(host, port, path, query))
 
             #parallel by multiple threads
             self.sharedLock.acquire()
             pHostSize = len(self.sharedHost)
             self.sharedHost.add(host)
-            sys.stdout.write("         Checking host uniqueness... ")
+            # sys.stdout.write("         Checking host uniqueness... ")
             cHostSize = len(self.sharedHost)
             self.sharedLock.release()
 
             if (cHostSize > pHostSize):
-                sys.stdout.write('passed' + '\n')
+                # sys.stdout.write('passed' + '\n')
                 myIp = mysocket.getIP(host)
                 self.sharedLock.acquire()
                 pIpSize = len(self.sharedIP)
                 self.sharedIP.add(myIp)
-                sys.stdout.write("         Checking IP uniqueness... ")
+                # sys.stdout.write("         Checking IP uniqueness... ")
                 cIpSize = len(self.sharedIP)
                 self.sharedLock.release()
 
                 if (cIpSize > pIpSize):
-                    sys.stdout.write('passed' + '\n')
+                    # sys.stdout.write('passed' + '\n')
                     msg = myrequest.headRequest(host) # build our request
                     self.sharedLock.acquire()
                     if query.find('download') == -1:
@@ -91,8 +91,8 @@ class MyThread (threading.Thread):
                         if idx != -1:
                             statusCode = data[idx+8:idx+13]
                             if (statusCode != '200 OK'):
-                                sys.stdout.write("status code {}\n".format(statusCode))
-                                myparser.responseParser(data)
+                                # sys.stdout.write("status code {}\n".format(statusCode))
+                                # myparser.responseParser(data)
                                 mysocket.close()
                             else:
                                 mysocket.close()
@@ -102,14 +102,14 @@ class MyThread (threading.Thread):
                                      
                     self.sharedLock.release()
 
-                else:
-                    sys.stdout.write(' NOT unique' + '\n')
-            else:
-                sys.stdout.write(' NOT unique' + '\n')
+                # else:
+                    # sys.stdout.write(' NOT unique' + '\n')
+            # else:
+                # sys.stdout.write(' NOT unique' + '\n')
             # time.sleep(1) #given url, parse it, get ip address, check if ip is unique, ...
-            print('\nQueue length: ',len(self.sharedQ.queue))
+            # print('\nQueue length: ',len(self.sharedQ.queue))
             continue
-        print("thread %d thread existing " % (self.threadID))
+        # print("thread %d thread existing " % (self.threadID))
 
 def main():
     
