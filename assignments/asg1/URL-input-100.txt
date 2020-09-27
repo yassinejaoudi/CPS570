@@ -1,4 +1,5 @@
 http://www.symantec.com/verisign/ssl-certificates
+http://www.symantec.com/verisign/ssl-certificates
 http://amti.csis.org/category/taiwan/
 http://www.weatherline.net/
 http://ace.wikipedia.org/wiki/%C3%94n_Keu%C3%AB
