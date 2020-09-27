@@ -41,8 +41,18 @@ class MyThread (threading.Thread):
         cHostSize = 0 # current  Host Size
         pIpSize = 0 # previous Ip Size
         cIpSize = 0 # current  Ip Size
+        #robochecks count
+        robochecks = 0 #will need updated
+        #links count
+        links = 0 #should update after pages are parsed--will fix if not
+        ctr = 1
 
         while not self.sharedQ.empty():
+            if(self.threadID == 0):
+                time.sleep(2)
+                tm = 2 * ctr
+                print("[", tm, "]     ", self.sharedCount, " Q       ", pHostSize, " E      ", cHostSize, " H      ", pIpSize, " D        ", cIpSize, " I       ", robochecks, " R      ", len(url), " C        ", links, " L       ") #Add XK - count?
+                ctr += 1
             self.sharedLock.acquire() #one thread modifies items at a time
             if (self.sharedCount [0] < 1):
                 self.sharedLock.release()
@@ -82,7 +92,7 @@ class MyThread (threading.Thread):
                     if query.find('download') == -1:
                         mysocket.checkrobots(host)
                         currentURL = url[0]
-                        myparser.parsePage(currentURL)
+                        myparser.parsePage(currentURL, links) #might need to update links)
                         self.sharedLock.release()
 
                         self.sharedLock.acquire()

@@ -73,13 +73,13 @@ class URLparser:
             for i in range(len(data)):
                 print(data[i])
 
-    def parsePage(self, URL):
+    def parsePage(self, URL, num):
         links = []
         try:
             # sys.stdout.write("         Parsing Page... ")
             parseStart = time.time()
             html = urlopen(URL)
-            bsObj = BeautifulSoup(html.read())
+            bsObj = BeautifulSoup(html.read(), features="lxml")
                     
             for link in bsObj.findAll('a'):
                 links.append(link.get('href'))
@@ -89,7 +89,7 @@ class URLparser:
             
         except Exception as exception:
             print(exception)
-
+        num = len(links)
       
         
         
