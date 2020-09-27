@@ -88,7 +88,9 @@ class URLparser:
             # sys.stdout.write("done in {} ms with {} links \n".format(timeParse, len(links)))
             
         except Exception as exception:
-            print(exception)
+            # print(exception)
+            # TODO: Add a set variable to count the error exception
+            pass
         num = len(links)
       
         

@@ -49,7 +49,7 @@ class TCPsocket:
             dns_time = (dns_end - dns_start) * 1000 # in ms 
             # print('         Doing DNS... done in {} ms, found {}'.format(round(dns_time,2), ip))
         except socket.gaierror:
-            print("DNS failure... Unable to obtain IP address")
+            # print("DNS failure... Unable to obtain IP address")
             return None
         return ip
 
@@ -127,7 +127,7 @@ class TCPsocket:
         try:
             bytesSent = self.sock.sendall(request.encode())   # encode(): convert string to bytes
         except socket.error as e:
-            print("socket error in send: {}".format(e))
+            # print("socket error in send: {}".format(e))
             self.sock.close()
             self.sock = None
         return bytesSent
@@ -163,7 +163,7 @@ class TCPsocket:
             # sys.stdout.write('done in {} ms with {} bytes'.format(round(rcv_time,2), bytesRecd) + '\n')
             # sys.stdout.write("         Verifying header... ")
         except socket.error as e:
-            print("socket error in receive: {}".format(e))
+            # print("socket error in receive: {}".format(e))
             self.sock.close()
             self.sock = None
         return str(reply)
