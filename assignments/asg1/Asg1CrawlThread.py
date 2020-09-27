@@ -45,14 +45,26 @@ class MyThread (threading.Thread):
         robochecks = 0 #will need updated
         #links count
         links = 0 #should update after pages are parsed--will fix if not
-        ctr = 1
-
+      
         while not self.sharedQ.empty():
+            #----------------------------------------------------------------------begin added printing section
             if(self.threadID == 0):
                 time.sleep(2)
-                tm = 2 * ctr
-                print("[", tm, "]     ", self.sharedCount, " Q       ", pHostSize, " E      ", cHostSize, " H      ", pIpSize, " D        ", cIpSize, " I       ", robochecks, " R      ", len(url), " C        ", links, " L       ") #Add XK - count?
-                ctr += 1
+                print("[", self.threadID, "]     ", self.sharedCount, " Q       ", pHostSize, " E      ", cHostSize, " H      ", pIpSize, " D        ", cIpSize, " I       ", robochecks, " R      ", len(url), " C        ", links, " L       ") #Add XK - count?
+                self.sharedLock.acquire()
+                print("time %d threadID %d prints size-of-set: %d" % (time.time(), self.threadID, len(self.sharedCount)))
+                if (self.sharedQ.empty()):  # if empty Q, let thread 0 exit
+                    self.sharedLock.release()
+                    break   
+                self.sharedLock.release()
+            else:
+                self.sharedLock.acquire()
+                if (self.sharedQ[0] < 1):
+                    self.sharedLock.release()
+                    break
+                x = self.sharedQ.pop(0);  # pop the front item at index 0 from the queue
+                self.sharedQ[0] -= 1
+            #----------------------------------------------------------------------end added printing section
             self.sharedLock.acquire() #one thread modifies items at a time
             if (self.sharedCount [0] < 1):
                 self.sharedLock.release()
