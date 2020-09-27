@@ -144,7 +144,7 @@ def main():
         print('No such file')
         exit(1)
     
-    print("Queue size:", Q.qsize()) 
+    # print("Queue size:", Q.qsize()) 
     listOfThreads = [] # empty list
     uniqueIPs = set()
     uniqueHost = set()
