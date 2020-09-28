@@ -20,7 +20,7 @@ class MyThread (threading.Thread):
     sharedDns = [0]
     sharedRplSz = [0]
 
-    def __init__(self, ID, name, urlqueue, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks,rplSz):
+    def __init__(self, ID, name, urlqueue, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks,rplSz, ppsRate):
         threading.Thread.__init__(self)
         #define instance variables
         #initialize class variables
@@ -36,6 +36,7 @@ class MyThread (threading.Thread):
         self.sharedRate = transRate
         self.SharedRbtChecks = robochecks
         self.sharedRplSz = rplSz
+        self.sharedPpsRate = ppsRate
     
     def run(self): #override the run() method
         #define job for each thread
@@ -57,13 +58,17 @@ class MyThread (threading.Thread):
 
         while not self.sharedQ.empty():
             if(self.threadID == 0):
+                
+                # Reinitialize the packet per sec variable
+                self.sharedPpsRate[0] = 0
+                
                 time.sleep(2)
                 self.sharedLock.acquire()
                 tm = 2 * ctr
                 print("[", tm, "]     ", self.sharedCount[0], " Q       ", len(self.sharedExtUrl), " E      ", 
                     len(self.sharedHost), " H      ", len(self.sharedIP) - self.sharedDns[0], " D        ", len(self.sharedIP), " I       ", 
                     robochecks, " R      ", len(url), " C        ", links, " L       ") #Add XK - count?
-                print("       *** crawling {} pps @ {} Mbps".format(0.1, round(self.sharedRplSz[0]*10**-6/2,6)))
+                print("       *** crawling {} pps @ {} Mbps".format(self.sharedPpsRate[0]/2, round(self.sharedRplSz[0]*10**-6/2,6)))
                 ctr += 1
                 if (self.sharedCount[0] < 1):  # if empty Q, let thread 0 exit
                     self.sharedLock.release()
@@ -110,7 +115,11 @@ class MyThread (threading.Thread):
 
                     if (cIpSize > pIpSize):
                         # sys.stdout.write('passed' + '\n')
+                        self.sharedLock.acquire()
                         msg = myrequest.headRequest(host) # build our request
+                        self.sharedPpsRate[0] += 1
+                        self.sharedLock.release()
+
                         self.sharedLock.acquire()
                         if query.find('download') == -1:
                             
@@ -123,6 +132,7 @@ class MyThread (threading.Thread):
                             self.sharedLock.release()
 
                             self.sharedLock.acquire()
+
                             data = mysocket.crawl(port, msg, host, myIp)
                             # Increment the received data
                             self.sharedRplSz[0] += len(data)
@@ -182,12 +192,13 @@ def main():
     transRate = set()
     robochecks = 0
     rplSz = [0]
+    ppsRate = [0]
 
 
     count = 0
     
     for i in range(0, numThreads, 1):
-        t = MyThread(i, "Hi, ", Q, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks, rplSz)
+        t = MyThread(i, "Hi, ", Q, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks, rplSz, ppsRate)
         t.start()
         listOfThreads.append(t)
     for t in listOfThreads:
