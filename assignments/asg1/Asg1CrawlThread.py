@@ -60,7 +60,9 @@ class MyThread (threading.Thread):
                 time.sleep(2)
                 self.sharedLock.acquire()
                 tm = 2 * ctr
-                print("[", tm, "]     ", self.sharedCount[0], " Q       ", len(self.sharedExtUrl), " E      ", len(self.sharedHost), " H      ", len(self.sharedIP) - self.sharedDns[0], " D        ", len(self.sharedIP), " I       ", robochecks, " R      ", len(url), " C        ", links, " L       ") #Add XK - count?
+                print("[", tm, "]     ", self.sharedCount[0], " Q       ", len(self.sharedExtUrl), " E      ", 
+                    len(self.sharedHost), " H      ", len(self.sharedIP) - self.sharedDns[0], " D        ", len(self.sharedIP), " I       ", 
+                    robochecks, " R      ", len(url), " C        ", links, " L       ") #Add XK - count?
                 print("       *** crawling {} pps @ {} Mbps".format(0.1, round(self.sharedRplSz[0]*10**-6/2,6)))
                 ctr += 1
                 if (self.sharedCount[0] < 1):  # if empty Q, let thread 0 exit
@@ -191,7 +193,7 @@ def main():
     for t in listOfThreads:
         t.join()
     runTime = time.time() - startT
-    print("Running time is ", runTime)
+    print("\nRunning time is ", runTime)
 
     print('Extracted {} URLs @ {}/s'.format(len(t.sharedExtUrl), round(len(t.sharedExtUrl)/runTime,2)))
     print('Looked up {} DNS names @ {}/s'.format((len(t.sharedIP) - t.sharedDns[0]), round((len(t.sharedIP) - t.sharedDns[0])/runTime,2)))

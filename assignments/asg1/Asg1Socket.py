@@ -163,7 +163,7 @@ class TCPsocket:
             # sys.stdout.write('done in {} ms with {} bytes'.format(round(rcv_time,2), bytesRecd) + '\n')
             # sys.stdout.write("         Verifying header... ")
         except socket.error as e:
-            print("socket error in receive: {}".format(e))
+            # print("socket error in receive: {}".format(e))
             self.sock.close()
             self.sock = None
         return str(reply)
