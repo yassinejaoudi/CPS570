@@ -18,7 +18,7 @@ class MyThread (threading.Thread):
     sharedHost = set()
     sharedIP = set()
 
-    def __init__(self, ID, name, urlqueue, uniqueIPs, uniqueHost, count, extUrls, DnsLooks):
+    def __init__(self, ID, name, urlqueue, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate):
         threading.Thread.__init__(self)
         #define instance variables
         #initialize class variables
@@ -31,6 +31,7 @@ class MyThread (threading.Thread):
         self.sharedIP = uniqueIPs
         self.sharedExtUrl = extUrls
         self.sharedDns =  DnsLooks
+        self.sharedRate = transRate
     
     def run(self): #override the run() method
         #define job for each thread
@@ -48,7 +49,7 @@ class MyThread (threading.Thread):
         #links count
         links = 0 #should update after pages are parsed--will fix if not
         ctr = 1
-        extUrls = []
+        # extUrls = []
 
         while not self.sharedQ.empty():
             if(self.threadID == 0):
@@ -113,6 +114,7 @@ class MyThread (threading.Thread):
 
                             self.sharedLock.acquire()
                             data = mysocket.crawl(port, msg, host, myIp)
+                            # self.sharedRate += len(data)
                             idx = data.find('HTTP/')
                             if idx != -1:
                                 statusCode = data[idx+8:idx+13]
@@ -166,17 +168,23 @@ def main():
     uniqueHost = set()
     extUrls = set()
     DnsLooks = set()
+    transRate = set()
 
     count = 0
     
     for i in range(0, numThreads, 1):
-        t = MyThread(i, "Hi, ", Q, uniqueIPs, uniqueHost, count, extUrls, DnsLooks)
+        t = MyThread(i, "Hi, ", Q, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate)
         t.start()
         listOfThreads.append(t)
     for t in listOfThreads:
         t.join()
     runTime = time.time() - startT
     print("Running time is ", runTime)
+
+    print('Extracted {} URLs @ {}/s'.format(len(t.sharedExtUrl), round(len(t.sharedExtUrl)/runTime,2)))
+    #TODO: Fix the DNS number by incrementing the overall DNS for all threads
+    print('Looked up {} DNS names @ {}/s'.format((t.sharedCount[0] - len(t.sharedDns)), round((t.sharedCount[0] - len(t.sharedDns))/runTime,2)))
+    # print('Downloaded {} robots @ {}/s'.format())
 
 if __name__ == '__main__':
     main()
