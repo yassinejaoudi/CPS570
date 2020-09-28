@@ -49,22 +49,22 @@ class TCPsocket:
             dns_time = (dns_end - dns_start) * 1000 # in ms 
             # print('         Doing DNS... done in {} ms, found {}'.format(round(dns_time,2), ip))
         except socket.gaierror:
-            # print("DNS failure... Unable to obtain IP address")
+            print("DNS failure... Unable to obtain IP address")
             return None
         return ip
 
     def checkrobots(self,hostname):
-        useragent = requests.utils.default_user_agent()
+        # useragent = requests.utils.default_user_agent()
         self.host = hostname
         hostblist = ["allybruener.com", "ask.arabnews.com"]
         if hostname not in hostblist:
             robotlink = "https://" + hostname + "/robots.txt"
-            headers = {}
-            headers = [useragent]
+            # headers = {}
+            # headers = [useragent]
             #resp = requests.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=5, verify=False)
+            connSt = time.time()
             session = requests.Session()
             # sys.stdout.write("         Connecting on robots... ")
-            connSt = time.time()
             retry = Retry(connect=3, backoff_factor=0.5)
             adapter = HTTPAdapter(max_retries=retry)
             session.mount('http://', adapter)
@@ -78,21 +78,21 @@ class TCPsocket:
             # print('startrbtTime {} & type: {}'.format(startrbtTime, type(startrbtTime)))
             # if startrbtTime < 10:
             try:
-                resp = session.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=(5, 5), stream=False)
-            #print('iam here')
-                finishrbtTime = time.time()
-                rbt_time = finishrbtTime - startrbtTime
-        
-                if resp == None:
+                #resp = session.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=(5, 5), stream=False)
+                resp = urllib.request.urlopen(robotlink)
+             
+                if resp.get_code() != 200:
+                    return None
                     # if "content-length" in resp.headers:            
                     #     sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), resp.headers['content-length']))
                     # else:
                     #     sys.stdout.write(" done in {} ms with no content length\n".format(round(rbt_time,2)))
                 # else:
-                    sys.stdout.write(errormsg)
+                    # sys.stdout.write(errormsg)
                 # sys.stdout.write("         Verifying header... status code {} \n".format(resp.status_code))
             except Exception as e:
                 errormsg = str(e)
+                return None
         
             # else:
             #     sys.stdout.write("Not Loaded \n")
@@ -127,7 +127,7 @@ class TCPsocket:
         try:
             bytesSent = self.sock.sendall(request.encode())   # encode(): convert string to bytes
         except socket.error as e:
-            # print("socket error in send: {}".format(e))
+            print("socket error in send: {}".format(e))
             self.sock.close()
             self.sock = None
         return bytesSent
@@ -163,7 +163,7 @@ class TCPsocket:
             # sys.stdout.write('done in {} ms with {} bytes'.format(round(rcv_time,2), bytesRecd) + '\n')
             # sys.stdout.write("         Verifying header... ")
         except socket.error as e:
-            # print("socket error in receive: {}".format(e))
+            print("socket error in receive: {}".format(e))
             self.sock.close()
             self.sock = None
         return str(reply)
