@@ -18,8 +18,9 @@ class MyThread (threading.Thread):
     sharedHost = set()
     sharedIP = set()
     sharedDns = [0]
+    sharedRplSz = [0]
 
-    def __init__(self, ID, name, urlqueue, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks):
+    def __init__(self, ID, name, urlqueue, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks,rplSz):
         threading.Thread.__init__(self)
         #define instance variables
         #initialize class variables
@@ -34,6 +35,7 @@ class MyThread (threading.Thread):
         self.sharedDns =  DnsLooks
         self.sharedRate = transRate
         self.SharedRbtChecks = robochecks
+        self.sharedRplSz = rplSz
     
     def run(self): #override the run() method
         #define job for each thread
@@ -59,7 +61,7 @@ class MyThread (threading.Thread):
                 self.sharedLock.acquire()
                 tm = 2 * ctr
                 print("[", tm, "]     ", self.sharedCount[0], " Q       ", len(self.sharedExtUrl), " E      ", len(self.sharedHost), " H      ", len(self.sharedIP) - self.sharedDns[0], " D        ", len(self.sharedIP), " I       ", robochecks, " R      ", len(url), " C        ", links, " L       ") #Add XK - count?
-                print("       *** crawling {} pps @ {} Mbps".format(0.1, 20))
+                print("       *** crawling {} pps @ {} Mbps".format(0.1, round(self.sharedRplSz[0]*10**-6/2,6)))
                 ctr += 1
                 if (self.sharedCount[0] < 1):  # if empty Q, let thread 0 exit
                     self.sharedLock.release()
@@ -95,7 +97,6 @@ class MyThread (threading.Thread):
                     myIp = mysocket.getIP(host)
                     if myIp == None:
                         self.sharedDns[0] += 1
-                        print('SharedDNs: ',self.sharedDns[0])  
                         self.sharedLock.release()
                         break
                     # self.sharedLock.acquire()
@@ -121,7 +122,8 @@ class MyThread (threading.Thread):
 
                             self.sharedLock.acquire()
                             data = mysocket.crawl(port, msg, host, myIp)
-                            # self.sharedRate += len(data)
+                            # Increment the received data
+                            self.sharedRplSz[0] += len(data)
                             idx = data.find('HTTP/')
                             if idx != -1:
                                 statusCode = data[idx+8:idx+13]
@@ -177,11 +179,13 @@ def main():
     DnsLooks = [0]
     transRate = set()
     robochecks = 0
+    rplSz = [0]
+
 
     count = 0
     
     for i in range(0, numThreads, 1):
-        t = MyThread(i, "Hi, ", Q, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks)
+        t = MyThread(i, "Hi, ", Q, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks, rplSz)
         t.start()
         listOfThreads.append(t)
     for t in listOfThreads:
@@ -190,9 +194,12 @@ def main():
     print("Running time is ", runTime)
 
     print('Extracted {} URLs @ {}/s'.format(len(t.sharedExtUrl), round(len(t.sharedExtUrl)/runTime,2)))
-    #TODO: Fix the DNS number by incrementing the overall DNS for all threads
     print('Looked up {} DNS names @ {}/s'.format((len(t.sharedIP) - t.sharedDns[0]), round((len(t.sharedIP) - t.sharedDns[0])/runTime,2)))
-    print('Downloaded {} robots @ {}/s'.format(t.SharedRbtChecks, round(SharedRbtChecks/runTime,2)))
+    print('Downloaded {} robots @ {}/s'.format(t.SharedRbtChecks, round(t.SharedRbtChecks/runTime,2)))
+    # TODO: Fill the damn variables below with the correct ones
+    print('Crawled {} pages @ {}/s ({} MB)'.format(11,1,0.23))
+    print('Parsed {} links @ {}/s'.format(543, 70))
+    print('HTTP codes: 2xx = {}, 3xx = {}, 4xx = {}, 5xx = {}, other = {}'.format(7,4,0,0,0))
 
 if __name__ == '__main__':
     main()
