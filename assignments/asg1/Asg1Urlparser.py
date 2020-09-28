@@ -73,8 +73,8 @@ class URLparser:
             for i in range(len(data)):
                 print(data[i])
 
-    def parsePage(self, URL, num):
-        links = []
+    def parsePage(self, URL, links):
+        
         try:
             # sys.stdout.write("         Parsing Page... ")
             parseStart = time.time()
@@ -85,13 +85,16 @@ class URLparser:
                 links.append(link.get('href'))
             parseFinish = time.time()
             timeParse = parseFinish - parseStart
+           
+            #print(len(links)) ---shows links are being processed and added
+         
             # sys.stdout.write("done in {} ms with {} links \n".format(timeParse, len(links)))
             
         except Exception as exception:
             # print(exception)
             # TODO: Add a set variable to count the error exception
             pass
-        num = len(links)
+        
       
         
         

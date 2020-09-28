@@ -20,7 +20,7 @@ class MyThread (threading.Thread):
     sharedDns = [0]
     sharedRplSz = [0]
 
-    def __init__(self, ID, name, urlqueue, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks,rplSz, ppsRate):
+    def __init__(self, ID, name, urlqueue, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks,rplSz, ppsRate, pendingQ, links):
         threading.Thread.__init__(self)
         #define instance variables
         #initialize class variables
@@ -37,6 +37,8 @@ class MyThread (threading.Thread):
         self.SharedRbtChecks = robochecks
         self.sharedRplSz = rplSz
         self.sharedPpsRate = ppsRate
+        self.sharedpendingQ = pendingQ
+        self.numLinks = links
     
     def run(self): #override the run() method
         #define job for each thread
@@ -52,7 +54,8 @@ class MyThread (threading.Thread):
         robochecks = 0 #robochecks count
          #will need updated
         #links count
-        links = 0 #should update after pages are parsed--will fix if not
+        #should update after pages are parsed--will fix if not
+        links = []
         ctr = 1
         # extUrls = []
 
@@ -65,9 +68,9 @@ class MyThread (threading.Thread):
                 time.sleep(2)
                 self.sharedLock.acquire()
                 tm = 2 * ctr
-                print("[", tm, "]     ", self.sharedCount[0], " Q       ", len(self.sharedExtUrl), " E      ", 
+                print("[", tm,"]", self.sharedpendingQ, " Q", (self.sharedCount[0] - self.sharedpendingQ),"      ", len(self.sharedExtUrl), " E      ", 
                     len(self.sharedHost), " H      ", len(self.sharedIP) - self.sharedDns[0], " D        ", len(self.sharedIP), " I       ", 
-                    robochecks, " R      ", len(url), " C        ", links, " L       ") #Add XK - count?
+                    robochecks, " R      ", len(url), " C        ", len(self.numLinks), " L       ") #Add XK - count?
                 print("       *** crawling {} pps @ {} Mbps".format(self.sharedPpsRate[0]/2, round(self.sharedRplSz[0]*10**-6/2,6)))
                 ctr += 1
                 if (self.sharedCount[0] < 1):  # if empty Q, let thread 0 exit
@@ -128,7 +131,9 @@ class MyThread (threading.Thread):
                                 robochecks += 1
 
                             currentURL = url[0]
-                            myparser.parsePage(currentURL, links) #might need to update links)
+                            myparser.parsePage(currentURL, links)
+                            
+                             #might need to update links)
                             self.sharedLock.release()
 
                             self.sharedLock.acquire()
@@ -193,12 +198,12 @@ def main():
     robochecks = 0
     rplSz = [0]
     ppsRate = [0]
-
-
+    pendingQ = numThreads
+    links = []
     count = 0
     
     for i in range(0, numThreads, 1):
-        t = MyThread(i, "Hi, ", Q, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks, rplSz, ppsRate)
+        t = MyThread(i, "Hi, ", Q, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks, rplSz, ppsRate, pendingQ, links)
         t.start()
         listOfThreads.append(t)
     for t in listOfThreads:
