@@ -54,48 +54,20 @@ class TCPsocket:
         return ip
 
     def checkrobots(self,hostname):
-        # useragent = requests.utils.default_user_agent()
         self.host = hostname
-        hostblist = ["allybruener.com", "ask.arabnews.com"]
-        if hostname not in hostblist:
-            robotlink = "https://" + hostname + "/robots.txt"
-            # headers = {}
-            # headers = [useragent]
-            #resp = requests.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=5, verify=False)
-            connSt = time.time()
-            session = requests.Session()
-            # sys.stdout.write("         Connecting on robots... ")
-            retry = Retry(connect=3, backoff_factor=0.5)
-            adapter = HTTPAdapter(max_retries=retry)
-            session.mount('http://', adapter)
-            session.mount('https://', adapter)
-            connFinish = time.time()
-            connTime = connFinish - connSt
-            # sys.stdout.write(" done in {} ms\n".format(connTime))
-
-            # sys.stdout.write("         Loading... ")
-            startrbtTime= time.time()
-            # print('startrbtTime {} & type: {}'.format(startrbtTime, type(startrbtTime)))
-            # if startrbtTime < 10:
-            try:
-                #resp = session.get(robotlink, headers={"HTTP_HOST":"MyHost"}, timeout=(5, 5), stream=False)
-                resp = urllib.request.urlopen(robotlink)
-             
-                if resp.get_code() != 200:
-                    return None
-                    # if "content-length" in resp.headers:            
-                    #     sys.stdout.write(" done in {} ms with {} bytes\n".format(round(rbt_time,2), resp.headers['content-length']))
-                    # else:
-                    #     sys.stdout.write(" done in {} ms with no content length\n".format(round(rbt_time,2)))
-                # else:
-                    # sys.stdout.write(errormsg)
-                # sys.stdout.write("         Verifying header... status code {} \n".format(resp.status_code))
-            except Exception as e:
-                errormsg = str(e)
-                return None
+        robotlink = "https://" + hostname + "/robots.txt"
         
-            # else:
-            #     sys.stdout.write("Not Loaded \n")
+        try:
+            resp = requests.get(robotlink)
+            if resp.status_code == 200:
+                return resp.status_code
+            else:
+                return None
+
+        except Exception as e:
+            errormsg = str(e)
+            return None
+
         
 
 
@@ -176,29 +148,7 @@ class TCPsocket:
 
     def crawl(self, port, msg, host, myIp):
         self.createSocket()
-        # myIp = self.getIP(host)
         self.connect(myIp, port)
         self.send(msg)
         reply = self.receive()
         return reply
-
-
-"""        
-        try:
-            print()
-            print("robotlink: ", robotlink)
-            headers = {}
-            headers['User-Agent'] = useragent
-            
-            #req = urllib.request.Request(robotlink, headers = headers)
-"""            
-        
-            
-        
-            
-            
-"""            
-        except urllib.error.HTTPError as e:
-            error = e.code
-            #print(error)
-"""   
