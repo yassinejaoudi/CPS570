@@ -8,7 +8,7 @@ from urllib.request import urlopen
 import urllib
 from bs4 import BeautifulSoup
 import html
-import requests, time, sys
+import requests, time, sys, re
 
 # urlparser.py
 class URLparser:
@@ -73,27 +73,34 @@ class URLparser:
             for i in range(len(data)):
                 print(data[i])
 
-    def parsePage(self, URL, links):
+    def parsePage(self, URL):
         
         try:
             # sys.stdout.write("         Parsing Page... ")
             parseStart = time.time()
             html = urlopen(URL)
-            bsObj = BeautifulSoup(html.read(), features="lxml")
+            # using BeautifulSoup
+            # bsObj = BeautifulSoup(html.read(), features="lxml")
                     
-            for link in bsObj.findAll('a'):
-                links.append(link.get('href'))
-            parseFinish = time.time()
-            timeParse = parseFinish - parseStart
+            # for link in bsObj.findAll('a'):
+            #     links.append(link.get('href'))
+            # parseFinish = time.time()
+            # timeParse = parseFinish - parseStart
            
+            # Using urllib
+            text = html.read()
+            plaintext = text.decode('utf8')
+            links = re.findall("href=[\"\'](.*?)[\"\']", plaintext)
+            # print('\nLinks len: {}'.format(len(links)))
+            return links
             #print(len(links)) ---shows links are being processed and added
          
             # sys.stdout.write("done in {} ms with {} links \n".format(timeParse, len(links)))
             
         except Exception as exception:
-            # print(exception)
             # TODO: Add a set variable to count the error exception
-            pass
+            errormsg = str(exception)
+            return None
         
       
         
