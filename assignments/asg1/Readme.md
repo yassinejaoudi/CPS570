@@ -66,6 +66,7 @@ The code for this assignment needs to meet the following items to meet a perfect
 * Single-Threading/ Multi-Threading concepts
 * GET Request procedures
 * Parsing webpages
+* TCP Socket procedures
 
 ## Google graph-size analysis:
 
