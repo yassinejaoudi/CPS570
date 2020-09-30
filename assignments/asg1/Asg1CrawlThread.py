@@ -71,9 +71,13 @@ class MyThread (threading.Thread):
                 time.sleep(2)
                 self.sharedLock.acquire()
                 tm = 2 * ctr
-                print("[", tm,"]", self.sharedpendingQ, " Q","      ", len(self.sharedExtUrl), " E      ", 
-                    len(self.sharedHost), " H      ", len(self.sharedIP) - self.sharedDns[0], " D        ", len(self.sharedIP), " I       ", 
-                    self.SharedRbtChecks[0], " R      ", self.sharedVldHTTP[0], " C        ", self.sharedLinks[0], " L       ") #Add XK - count?
+                print("[", tm,"]    ", self.sharedpendingQ, "    Q", (self.sharedCount[0] - self.sharedpendingQ), "    E ", len(self.sharedExtUrl), 
+                    "    H ",  len(self.sharedHost), "    D ", len(self.sharedIP) - self.sharedDns[0], "    I ", len(self.sharedIP), 
+                    "    R ", self.SharedRbtChecks[0], "    C ", self.sharedVldHTTP[0], "    L ", self.sharedLinks[0]) 
+
+                # print("[", tm,"]", self.sharedpendingQ, " Q","      ", len(self.sharedExtUrl), " E      ", 
+                #     len(self.sharedHost), " H      ", len(self.sharedIP) - self.sharedDns[0], " D        ", len(self.sharedIP), " I       ", 
+                #     self.SharedRbtChecks[0], " R      ", self.sharedVldHTTP[0], " C        ", self.sharedLinks[0], " L       ") 
 
                 print("       *** crawling {} pps @ {} Mbps".format(self.sharedPpsRate[0]/2, round(self.sharedRplSz[0]*10**-6/2,6)))
                 ctr += 1
