@@ -24,7 +24,7 @@ class MyThread (threading.Thread):
     sharedOtherHttp = []
     sharedLinks = [0]
 
-    def __init__(self, ID, name, urlqueue, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks,rplSz, ppsRate, pendingQ, links, vldHTTP, httpCodes, otherHttp):
+    def __init__(self, ID, name, urlqueue, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks,rplSz, ppsRate, pendingQ, links, vldHTTP, httpCodes, otherHttp, crawled, crawledSize):
         threading.Thread.__init__(self)
         #define instance variables
         #initialize class variables
@@ -46,6 +46,8 @@ class MyThread (threading.Thread):
         self.sharedVldHTTP = vldHTTP
         self.sharedHTTPCodes = httpCodes
         self.sharedOtherHttp = otherHttp
+        self.sharedCrawled = crawled
+        self.sharedCrawledSize = crawledSize
     
     def run(self): #override the run() method
         #define job for each thread
@@ -69,9 +71,10 @@ class MyThread (threading.Thread):
                 time.sleep(2)
                 self.sharedLock.acquire()
                 tm = 2 * ctr
-                print("[", tm,"]", self.sharedpendingQ, " Q", (self.sharedCount[0] - self.sharedpendingQ),"      ", len(self.sharedExtUrl), " E      ", 
+                print("[", tm,"]", self.sharedpendingQ, " Q","      ", len(self.sharedExtUrl), " E      ", 
                     len(self.sharedHost), " H      ", len(self.sharedIP) - self.sharedDns[0], " D        ", len(self.sharedIP), " I       ", 
                     self.SharedRbtChecks[0], " R      ", self.sharedVldHTTP[0], " C        ", self.sharedLinks[0], " L       ") #Add XK - count?
+
                 print("       *** crawling {} pps @ {} Mbps".format(self.sharedPpsRate[0]/2, round(self.sharedRplSz[0]*10**-6/2,6)))
                 ctr += 1
                 if (self.sharedCount[0] < 1):  # if empty Q, let thread 0 exit
@@ -144,6 +147,10 @@ class MyThread (threading.Thread):
                             # self.sharedLock.acquire()
 
                             data = mysocket.crawl(port, msg, host, myIp)
+                            if data != None:
+                                self.sharedCrawled[0] += 1
+                                self.sharedCrawledSize[0] += len(data)
+
                             # Increment the received data
                             self.sharedRplSz[0] += len(data)
                             idx = data.find('HTTP/')
@@ -211,11 +218,14 @@ def main():
     count = 0
     httpCodes = []
     otherHttp = []
+    crawled = [0]
+    crawledSize = [0]
     
     for i in range(0, numThreads, 1):
-        t = MyThread(i, "Hi, ", Q, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks, rplSz, ppsRate, pendingQ, links, vldHTTP, httpCodes, otherHttp)
+        t = MyThread(i, "Hi, ", Q, uniqueIPs, uniqueHost, count, extUrls, DnsLooks, transRate, robochecks, rplSz, ppsRate, pendingQ, links, vldHTTP, httpCodes, otherHttp, crawled, crawledSize)
         t.start()
         listOfThreads.append(t)
+
     for t in listOfThreads:
         t.join()
     runTime = time.time() - startT
@@ -239,8 +249,7 @@ def main():
     print('Extracted {} URLs @ {}/s'.format(len(t.sharedExtUrl), round(len(t.sharedExtUrl)/runTime,2)))
     print('Looked up {} DNS names @ {}/s'.format((len(t.sharedIP) - t.sharedDns[0]), round((len(t.sharedIP) - t.sharedDns[0])/runTime,2)))
     print('Downloaded {} robots @ {}/s'.format(t.SharedRbtChecks[0], round(t.SharedRbtChecks[0]/runTime,2)))
-    # TODO: Fill the variables below with the correct ones
-    print('Crawled {} pages @ {}/s ({} MB)'.format(11,1,0.23))
+    print('Crawled {} pages @ {}/s ({} MB)'.format(t.sharedCrawled[0],round(t.sharedCrawled[0]/runTime,2),round(t.sharedCrawledSize[0]*10**-6,5)))
     print('Parsed {} links @ {}/s'.format(t.sharedLinks[0],  round(t.sharedLinks[0]/runTime,2)))
     print('HTTP codes: 2xx = {}, 3xx = {}, 4xx = {}, 5xx = {}, other = {}'.format(twx[0],trwx[0],fxx[0],fivx[0],len(t.sharedOtherHttp)))
 

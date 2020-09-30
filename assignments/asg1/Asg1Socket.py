@@ -87,7 +87,7 @@ class TCPsocket:
             conn_end = time.time()
             # sys.stdout.write('done in {} ms'.format(round((conn_end - conn_start) * 1000,2)) + '\n')
         except socket.error as e:
-            print("Failed to connect: {}".format(e))
+            # print("Failed to connect: {}".format(e))
             self.sock.close() 
             self.sock = None
 
