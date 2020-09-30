@@ -63,6 +63,9 @@ The code for this assignment needs to meet the following items to meet a perfect
 * Debbuging techniques.
 * Time management.
 * :rotating_light: We need to add the technical lessons learned in this asg :rotating_light:
+* Single-Threading/ Multi-Threading concepts
+* GET Request procedures
+* Parsing webpages
 
 ## Google graph-size analysis:
 
