@@ -5,7 +5,7 @@ Team Members:
     Samantha Clark
 '''
 
-import sys, time, os, threading
+import sys, time, os, threading, concurrent.futures
 from Asg1Socket import TCPsocket
 from Asg1Request import Request
 from Asg1Urlparser import URLparser
@@ -41,7 +41,7 @@ class MyThread (threading.Thread):
         self.SharedRbtChecks = robochecks
         self.sharedRplSz = rplSz
         self.sharedPpsRate = ppsRate
-        self.sharedpendingQ = pendingQ
+        self.sharedThreading = pendingQ
         self.sharedLinks = links
         self.sharedVldHTTP = vldHTTP
         self.sharedHTTPCodes = httpCodes
@@ -62,6 +62,7 @@ class MyThread (threading.Thread):
         cIpSize = 0 # current  Ip Size
         ctr = 1
 
+
         while not self.sharedQ.empty():
             if(self.threadID == 0):
                 
@@ -71,11 +72,14 @@ class MyThread (threading.Thread):
                 time.sleep(2)
                 self.sharedLock.acquire()
                 tm = 2 * ctr
-                print("[", tm,"]    ", self.sharedpendingQ, "    Q", (self.sharedCount[0] - self.sharedpendingQ), "    E ", len(self.sharedExtUrl), 
+
+                x = threading.activeCount()
+
+                print("[", tm,"]    ", x, "    Q", self.sharedQ.qsize(), "    E ", len(self.sharedExtUrl), 
                     "    H ",  len(self.sharedHost), "    D ", len(self.sharedIP) - self.sharedDns[0], "    I ", len(self.sharedIP), 
                     "    R ", self.SharedRbtChecks[0], "    C ", self.sharedVldHTTP[0], "    L ", self.sharedLinks[0]) 
 
-                # print("[", tm,"]", self.sharedpendingQ, " Q","      ", len(self.sharedExtUrl), " E      ", 
+                # print("[", tm,"]", self.sharedThreading, " Q","      ", len(self.sharedExtUrl), " E      ", 
                 #     len(self.sharedHost), " H      ", len(self.sharedIP) - self.sharedDns[0], " D        ", len(self.sharedIP), " I       ", 
                 #     self.SharedRbtChecks[0], " R      ", self.sharedVldHTTP[0], " C        ", self.sharedLinks[0], " L       ") 
 
