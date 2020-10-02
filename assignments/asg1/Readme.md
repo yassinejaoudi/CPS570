@@ -62,11 +62,16 @@ The code for this assignment needs to meet the following items to meet a perfect
 * Frequent and great communication throughout the team using zoom meeting or group chat.
 * Debbuging techniques.
 * Time management.
-* :rotating_light: We need to add the technical lessons learned in this asg :rotating_light:
-* Single-Threading/ Multi-Threading concepts
+* :rotating_light: Technical lessons learned: :rotating_light:
+* Single-Threading/Multi-Threading concepts
 * GET Request procedures
 * Parsing webpages
 * TCP Socket procedures
+* DNS lookups
+* Robot checks
+* HTTP code meanings
+* Verifying unique hosts and IP addresses
+
 
 ## Google graph-size analysis:
 *Average number of links per HTML page that came back with a 2xx code: <br /> 
