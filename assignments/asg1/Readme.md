@@ -69,7 +69,10 @@ The code for this assignment needs to meet the following items to meet a perfect
 * TCP Socket procedures
 
 ## Google graph-size analysis:
-
+Average number of links per HTML page that came back with a 2xx code: <br /> 
+    Total number of links = 8119 <br /> 
+    Number of pages with 2xx = 8 <br /> 
+    8119 / 8 = 1,014.875 <br /> 
 ## Yahoo bandwidth analysis:
 
 ## Probability analysis:
