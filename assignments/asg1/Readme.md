@@ -70,9 +70,14 @@ The code for this assignment needs to meet the following items to meet a perfect
 
 ## Google graph-size analysis:
 Average number of links per HTML page that came back with a 2xx code: <br /> 
-    Total number of links = 8119 <br /> 
-    Number of pages with 2xx = 8 <br /> 
-    8119 / 8 = 1,014.875 <br /> 
+Total number of links = 8119 <br /> 
+Number of pages with 2xx = 8 <br /> 
+8119 / 8 = 1,014.875 <br /> 
+<br /> 
+Google webgraph solution: <br /> 
+1 T <br /> 
+Each node has a list of neighbors: 1,014.875 <br /> 
+1 T x 1,014.875 edges x (64/8) = 8.119 T/bytes
 ## Yahoo bandwidth analysis:
 
 ## Probability analysis:
