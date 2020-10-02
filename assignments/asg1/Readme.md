@@ -92,11 +92,11 @@ Number of unique hosts / total number of links in the input file  <br />
 <br />
 *Probability that a unique host has a valid DNS record:  <br />
 Size of unique IP addresses / Number of unique hosts  <br />
-***** / 61  <br />
+66 / 61  = 1.08 <br />
  <br />
  *Percentage of contacted sites had a 4xx robots file: <br />
  (Number of total unique IP addresses - Number of robots) / Total of unique IP addresses  <br />
-  
+ (66 - 43) / 66 = 0.35
   <br />
 
 ## Tasks done from previous assignment part:
