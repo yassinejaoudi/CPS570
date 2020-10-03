@@ -45,12 +45,11 @@ The code for this assignment needs to meet the following items to meet a perfect
 
 | **Bug** | **Status** | **Fix Implemented** | **Fixed by** |
 |---------|------------|---------------------|--------------|
-|   |    |   |   |
-| |    |    |   |
+|  I, R, and L is not incremented throughout the 2 seconds |  :heavy_check_mark:  | Used an integer inside a list due to the fact that lists are mutable and not integers | **YJ**  |
 
 
 ## Code Output:
-
+![Output](results-100urls.png)
 
 ## Goal of this part 2 of the assignment:
 ### hw1.exe 10 URL-input-100.txt
@@ -62,7 +61,6 @@ The code for this assignment needs to meet the following items to meet a perfect
 * Frequent and great communication throughout the team using zoom meeting or group chat.
 * Debbuging techniques.
 * Time management.
-* :rotating_light: Technical lessons learned: :rotating_light:
 * Single-Threading/Multi-Threading concepts
 * GET Request procedures
 * Parsing webpages
@@ -104,12 +102,8 @@ Size of unique IP addresses / Number of unique hosts  <br />
  (66 - 43) / 66 = 0.35
   <br />
 
-## Tasks done from previous assignment part:
-
-
 
 ## :sparkles: Future Work :sparkles:
 
-* Find a way to specify the buffer size dynamically.
-* Current code runtime is **118.58 ms**, we will be improving this runtime by making the code more effecient in order to decrease the runtime.
+* Current code runtime is **458.23 ms**, we will be improving this runtime by making the code more effecient in order to decrease the runtime.
 * Improve the overall design of the code. 
