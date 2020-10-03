@@ -77,7 +77,7 @@ The code for this assignment needs to meet the following items to meet a perfect
 Total number of links = 8119 <br /> 
 Number of pages with 2xx = 8 <br /> 
 8119 / 8 = 1,014.875 <br /> 
-<br /> 
+
 * Google webgraph solution: <br /> 
 1 T <br /> 
 Each node has a list of neighbors: 1,014.875 <br /> 
@@ -93,15 +93,15 @@ Bandwidth = (2K x 10^10) / (24 x 60 x 60) = (2K x 10^10) / 86,400 = 231,481,481.
 * The probability that a URL in the input host contains a unique host:  <br /> 
 Number of unique hosts / total number of links in the input file  <br /> 
 61 / 100 = 0.61  <br />
-<br />
+
 * Probability that a unique host has a valid DNS record:  <br />
 Size of unique IP addresses / Number of unique hosts  <br />
 66 / 61  = 1.08 <br />
- <br />
+
 * Percentage of contacted sites had a 4xx robots file: <br />
 (Number of total unique IP addresses - Number of robots) / Total of unique IP addresses  <br />
 (66 - 43) / 66 = 0.35
- <br />
+
 
 
 ## :sparkles: Future Work :sparkles:
