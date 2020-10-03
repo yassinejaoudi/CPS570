@@ -82,9 +82,9 @@ Number of pages with 2xx = 8 <br />
 Each node has a list of neighbors: 1,014.875 <br /> 
 1 T x 1,014.875 edges x (64/8) = 8.119 T/bytes
 ## Yahoo bandwidth analysis:
-*Average page size in bytes =  <br /> 
+*Average page size in bytes:  <br /> 
 10 billion pages per day (10 x 10^9) <br /> 
-Number of bytes per page =  <br /> 
+Number of bytes per page = 2K <br /> 
 Bandwidth = bytes / seconds in a day  <br /> 
 Bandwidth = (2K x 10^10) / (24 x 60 x 60) = (2K x 10^10) / 86,400 = 231,481,481.4814815 bytes/sec  <br /> 
 
