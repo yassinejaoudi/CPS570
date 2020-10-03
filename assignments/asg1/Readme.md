@@ -38,7 +38,7 @@ The code for this assignment needs to meet the following items to meet a perfect
 |  **Summary**  | 6  | 1<br />1<br />1<br />1<br />1<br />1<br />  | Correct URL processing rate<br />Correct DNS rate<br />Correct robots rate<br />Correct crawled rate/totals<br />Correct parser speed <br />Correct HTTP breakdown <br />  | :construction: <br />:construction:<br /><br /><br /><br /><br /> | <br /><br />:construction:<br />:construction:<br /><br /><br />  |  <br /><br /><br /> <br /> :construction:<br />:construction:<br /> |
 |**Code**| 6  | 1<br />1<br />2<br />1<br />1<br />  |  >>20Mbps w/ 500 threads <br /> >>200MB RAM w/500 threads<br /> No deadlocks on exit<br />No issues with the file reader <br /> No improper stats thread<br />  | <br /><br /><br /><br /><br />  | <br /><br /><br /><br /><br /> |  <br /><br /><br /><br /><br /> |
 |  **Other**  | 1  | 1  | No Missing files for compilation  |  |   |   |
-|  **Report**  | 25  | 5<br />5<br />5<br />5<br />5<br />  | Lessons learned and trace<br />Google graph-size analysis<br />Yahoo band-width analysis<br /> Probability analysis<br /> Written Report<br />  |  <br />:heavy_check_mark: <br />:heavy_check_mark:<br />:heavy_check_mark:<br />:heavy_check_mark:<br /> | <br /> <br /><br /><br /><br /> | <br /> <br /><br /><br /><br /> |
+|  **Report**  | 25  | 5<br />5<br />5<br />5<br />5<br />  | Lessons learned and trace<br />Google graph-size analysis<br />Yahoo band-width analysis<br /> Probability analysis<br /> Written Report<br />  | :heavy_check_mark: <br />:heavy_check_mark: <br />:heavy_check_mark:<br />:heavy_check_mark:<br />:heavy_check_mark:<br /> | <br /> <br /><br /><br /><br /> | <br /> <br /><br /><br /><br /> |
 
 
 ## :bug: Bug Fixes :bug: :
